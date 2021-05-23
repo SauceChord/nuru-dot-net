@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace nuru.NUI
@@ -12,7 +11,7 @@ namespace nuru.NUI
             try
             {
                 if (reader == null)
-                    throw new System.ArgumentNullException("reader");
+                    throw new ArgumentNullException("reader");
 
                 ImageHeader header = new ImageHeader();
                 header.Signature = Encoding.ASCII.GetString(reader.ReadBytes(7));
@@ -27,12 +26,12 @@ namespace nuru.NUI
 
                 header.GlyphMode = (GlyphMode)reader.ReadByte();
 
-                if (IsIllegalEnum(header.GlyphMode))
+                if (header.GlyphMode.IsUndefined())
                     throw new ImageLoadException($"Unknown glyph mode '{header.GlyphMode}'.");
 
                 header.ColorMode = (ColorMode)reader.ReadByte();
 
-                if (IsIllegalEnum(header.ColorMode))
+                if (header.ColorMode.IsUndefined())
                     throw new ImageLoadException($"Unknown color mode '{header.ColorMode}'.");
 
                 if (header.GlyphMode == GlyphMode.None
@@ -41,7 +40,7 @@ namespace nuru.NUI
 
                 header.MetadataMode = (MetadataMode)reader.ReadByte();
 
-                if (IsIllegalEnum(header.MetadataMode))
+                if (header.MetadataMode.IsUndefined())
                     throw new ImageLoadException($"Unknown metadata mode '{header.MetadataMode}'.");
 
                 header.Width = reader.ReadUInt16();
@@ -58,10 +57,6 @@ namespace nuru.NUI
             {
                 throw new ImageLoadException("Could not read stream.", e);
             }
-        }
-        private static bool IsIllegalEnum<T>(T value)
-        {
-            return !((T[])Enum.GetValues(typeof(T))).Contains(value);
         }
     }
 }

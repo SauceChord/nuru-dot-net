@@ -1,25 +1,6 @@
-using System.Linq;
-using System;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
-
-
-public enum PaletteType : byte
-{
-    None = 0,
-    ColorEightBit = 1,
-    GlyphUnicode = 2,
-    ColorRGB = 3,
-}
-
-public struct Cell
-{
-    public char Character;
-    public byte Foreground;
-    public byte Background;
-    public ushort Metadata;
-}
 
 namespace nuru.NUI.Tests
 {

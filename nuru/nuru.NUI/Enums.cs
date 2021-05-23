@@ -22,4 +22,12 @@
         OneByte = 1,
         TwoBytes = 2,
     }
+
+    public enum PaletteType : byte
+    {
+        None = 0,
+        ColorEightBit = 1,
+        GlyphUnicode = 2,
+        ColorRGB = 3,
+    }
 }

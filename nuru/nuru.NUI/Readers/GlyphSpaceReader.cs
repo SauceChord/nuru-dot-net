@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace nuru.NUI.Readers
+﻿namespace nuru.NUI.Readers
 {
     public class GlyphSpaceReader : IGlyphReader
     {

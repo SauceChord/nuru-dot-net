@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace nuru.NUI.Readers
+﻿namespace nuru.NUI.Readers
 {
     public class CellReader
     {
-        protected IGlyphReader glyphReader;
-        protected IColorPairReader colorPairReader;
-        protected IMetadataReader metadataReader;
+        protected IGlyphReader glyph;
+        protected IColorPairReader color;
+        protected IMetadataReader metadata;
 
-        public CellReader(IGlyphReader glyphReader, IColorPairReader colorPairReader, IMetadataReader metadataReader)
+        public CellReader(IGlyphReader glyph, IColorPairReader color, IMetadataReader metadata)
         {
-            this.glyphReader = glyphReader;
-            this.colorPairReader = colorPairReader;
-            this.metadataReader = metadataReader;
+            this.glyph = glyph;
+            this.color = color;
+            this.metadata = metadata;
         }
 
         public Cell Read()
         {
-            return new Cell(
-                glyphReader.Read(), 
-                colorPairReader.Read(), 
-                metadataReader.Read());
+            return new Cell(glyph.Read(), color.Read(), metadata.Read());
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using nuru.NUI.Writers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace nuru.NUI.Tests.Writers
 {

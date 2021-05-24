@@ -6,14 +6,14 @@ namespace nuru.NUI
 {
     public class ImageLoader
     {
-        public static ImageHeader LoadHeader(BinaryReader reader)
+        public static Header LoadHeader(BinaryReader reader)
         {
             try
             {
                 if (reader == null)
                     throw new ArgumentNullException("reader");
 
-                ImageHeader header = new ImageHeader();
+                Header header = new Header();
                 header.Signature = Encoding.ASCII.GetString(reader.ReadBytes(7));
 
                 if (header.Signature != "NURUIMG")
@@ -57,6 +57,33 @@ namespace nuru.NUI
             {
                 throw new ImageLoadException("Could not read stream.", e);
             }
+        }
+
+
+        public static Image LoadImage(BinaryReader reader)
+        {
+            Header header = LoadHeader(reader);
+            Image image = new Image();
+            image.Width = header.Width;
+            image.Height = header.Height;
+            image.GlyphMode = header.GlyphMode;
+            image.ColorMode = header.ColorMode;
+            image.MetadataMode = header.MetadataMode;
+            image.GlyphPalette = header.GlyphPaletteName;
+            image.ColorPalette = header.ColorPaletteName;            
+
+            Cell[,] cells = new Cell[image.Width, image.Height];
+
+            CellMode mode = new CellMode(header.GlyphMode, header.ColorMode, header.MetadataMode);
+            BinaryCellReader cellReader = new BinaryCellReader(reader.BaseStream, mode);
+
+            for (ushort row = 0; row < image.Height; ++row)
+                for (ushort col = 0; col < image.Width; ++col)
+                    cells[col, row] = cellReader.ReadCell();
+
+            image.Cells = cells;
+
+            return image;
         }
     }
 }

@@ -1,10 +1,11 @@
+using System;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
 
 namespace nuru.NUI.Tests
 {
-    public class Tests
+    public class TestImageLoader
     {
         const byte VersionOne = 1;
 
@@ -16,7 +17,7 @@ namespace nuru.NUI.Tests
         [Test]
         public void TestLoadWithNullReader()
         {
-            var exception = Assert.Throws<System.ArgumentNullException>(() => Load(null));
+            var exception = Assert.Throws<System.ArgumentNullException>(() => ImageLoader.LoadHeader(null));
             Assert.That(exception.ParamName, Is.EqualTo("reader"));
             Assert.That(exception.Message, Is.EqualTo("Value cannot be null. (Parameter 'reader')"));
         }
@@ -27,7 +28,7 @@ namespace nuru.NUI.Tests
             var emptyStream = new MemoryStream();
             var emptyReader = new BinaryReader(emptyStream);
 
-            var exception = Assert.Throws<ImageLoadException>(() => Load(emptyReader));
+            var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(emptyReader));
             Assert.That(exception.Message, Is.EqualTo("No valid NUI signature found."));
         }
 
@@ -39,7 +40,7 @@ namespace nuru.NUI.Tests
             var badSigStream = new MemoryStream(new byte[7]);
             var badSigReader = new BinaryReader(badSigStream);
 
-            var exception = Assert.Throws<ImageLoadException>(() => Load(badSigReader));
+            var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badSigReader));
             Assert.That(exception.Message, Is.EqualTo("No valid NUI signature found."));
         }
 
@@ -57,7 +58,7 @@ namespace nuru.NUI.Tests
                 badVersionStream.Position = 0;
                 var badVersionReader = new BinaryReader(badVersionStream);
 
-                var exception = Assert.Throws<ImageLoadException>(() => Load(badVersionReader));
+                var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badVersionReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unsupported version '{badVersion}'."));
             }
         }
@@ -76,7 +77,7 @@ namespace nuru.NUI.Tests
                 badGlyphStream.Position = 0;
                 var badGlyphReader = new BinaryReader(badGlyphStream);
 
-                var exception = Assert.Throws<ImageLoadException>(() => Load(badGlyphReader));
+                var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badGlyphReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown glyph mode '{badGlyph}'."));
             }
         }
@@ -96,7 +97,7 @@ namespace nuru.NUI.Tests
                 badColorStream.Position = 0;
                 var badColorReader = new BinaryReader(badColorStream);
 
-                var exception = Assert.Throws<ImageLoadException>(() => Load(badColorReader));
+                var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badColorReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown color mode '{badColor}'."));
             }
         }
@@ -113,7 +114,7 @@ namespace nuru.NUI.Tests
             badColorStream.Position = 0;
             var badColorReader = new BinaryReader(badColorStream);
 
-            var exception = Assert.Throws<ImageLoadException>(() => Load(badColorReader));
+            var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badColorReader));
             Assert.That(exception.Message, Is.EqualTo("Color mode can't be None (0) when glyph mode is set to None (0)."));
         }
 
@@ -132,7 +133,7 @@ namespace nuru.NUI.Tests
                 badMetadataStream.Position = 0;
                 var badMetadataReader = new BinaryReader(badMetadataStream);
 
-                var exception = Assert.Throws<ImageLoadException>(() => Load(badMetadataReader));
+                var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badMetadataReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown metadata mode '{badMetadata}'."));
             }
         }
@@ -151,7 +152,7 @@ namespace nuru.NUI.Tests
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.Palette);
             writer.Write((byte)ColorMode.FourBit);
-            writer.Write((byte)MetadataMode.TwoBytes);
+            writer.Write((byte)MetadataMode.SixteenBit);
             writer.Write(width);
             writer.Write(height);
             writer.Write((byte)32);
@@ -162,13 +163,13 @@ namespace nuru.NUI.Tests
 
             stream.Position = 0;
             var reader = new BinaryReader(stream);
-            var header = Load(reader);
+            var header = ImageLoader.LoadHeader(reader);
 
             Assert.That(header.Signature, Is.EqualTo("NURUIMG"));
             Assert.That(header.Version, Is.EqualTo(1));
             Assert.That(header.GlyphMode, Is.EqualTo(GlyphMode.Palette));
             Assert.That(header.ColorMode, Is.EqualTo(ColorMode.FourBit));
-            Assert.That(header.MetadataMode, Is.EqualTo(MetadataMode.TwoBytes));
+            Assert.That(header.MetadataMode, Is.EqualTo(MetadataMode.SixteenBit));
             Assert.That(header.Width, Is.EqualTo(width));
             Assert.That(header.Height, Is.EqualTo(height));
             Assert.That(header.KeyGlyph, Is.EqualTo(32));
@@ -187,19 +188,82 @@ namespace nuru.NUI.Tests
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.Palette);
             writer.Write((byte)ColorMode.FourBit);
-            writer.Write((byte)MetadataMode.TwoBytes);
+            writer.Write((byte)MetadataMode.SixteenBit);
             writer.Write((byte)0); // Should be a ushort width here, but faking broken file.
             stream.Position = 0;
             var reader = new BinaryReader(stream);
             
-            var exception = Assert.Throws<ImageLoadException>(() => Load(reader));
+            var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(reader));
             Assert.That(exception.Message, Is.EqualTo("Could not read stream."));
             Assert.That(exception.InnerException.GetType(), Is.EqualTo(typeof(EndOfStreamException)));
         }
 
-        public ImageHeader Load(BinaryReader reader)
+        [Test]
+        public void TestLoadingEmptyImage()
         {
-            return ImageLoader.LoadHeader(reader);
+            var stream = new MemoryStream();
+            var writer = new BinaryWriter(stream);
+            writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
+            writer.Write(VersionOne);
+            writer.Write((byte)GlyphMode.ASCII);
+            writer.Write((byte)ColorMode.FourBit);
+            writer.Write((byte)MetadataMode.None);
+            writer.Write((ushort)0); // width
+            writer.Write((ushort)0); // height
+            writer.Write((byte)32);
+            writer.Write((byte)15);
+            writer.Write((byte)1);
+            writer.Write(Encoding.ASCII.GetBytes("GLY_PAL"));
+            writer.Write(Encoding.ASCII.GetBytes("COL_PAL"));
+            // image follows, but it's 0x0 characters, so should return empty image.
+            stream.Position = 0;
+
+            Image image = ImageLoader.LoadImage(new BinaryReader(stream));
+
+            Assert.That(image.Width, Is.EqualTo(0));
+            Assert.That(image.Height, Is.EqualTo(0));
+            Assert.That(image.GlyphMode, Is.EqualTo(GlyphMode.ASCII));
+            Assert.That(image.ColorMode, Is.EqualTo(ColorMode.FourBit));
+            Assert.That(image.MetadataMode, Is.EqualTo(MetadataMode.None));
+            Assert.That(image.GlyphPalette, Is.EqualTo("GLY_PAL"));
+            Assert.That(image.ColorPalette, Is.EqualTo("COL_PAL"));
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => image.GetCell(0, 0));
+            Assert.That(exception.Message, Is.EqualTo("Attempting to access cell outside bounds."));
+        }
+
+        [Test]
+        public void TestLoading1pxImage()
+        {
+            var stream = new MemoryStream();
+            var writer = new BinaryWriter(stream);
+            writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
+            writer.Write(VersionOne);
+            writer.Write((byte)GlyphMode.ASCII);
+            writer.Write((byte)ColorMode.FourBit);
+            writer.Write((byte)MetadataMode.SixteenBit);
+            writer.Write((ushort)1); // width
+            writer.Write((ushort)1); // height
+            writer.Write((byte)32);
+            writer.Write((byte)15);
+            writer.Write((byte)1);
+            writer.Write(Encoding.ASCII.GetBytes("GLY_PAL"));
+            writer.Write(Encoding.ASCII.GetBytes("COL_PAL"));
+            // image follows:
+            Cell expectedCell = new Cell('A', 2, 4, 22334);
+            writer.Write(expectedCell.PackCharacter());
+            writer.Write(expectedCell.PackColors());
+            writer.Write(expectedCell.Metadata);
+
+            stream.Position = 0;
+
+            Image image = ImageLoader.LoadImage(new BinaryReader(stream));
+
+            Assert.That(image.Width, Is.EqualTo(1));
+            Assert.That(image.Height, Is.EqualTo(1));
+            Assert.That(image.GetCell(0, 0).Character, Is.EqualTo(expectedCell.Character));
+            Assert.That(image.GetCell(0, 0).Colors.Foreground, Is.EqualTo(expectedCell.Colors.Foreground));
+            Assert.That(image.GetCell(0, 0).Colors.Background, Is.EqualTo(expectedCell.Colors.Background));
+            Assert.That(image.GetCell(0, 0).Metadata, Is.EqualTo(expectedCell.Metadata));
         }
     }
 }

@@ -3,8 +3,8 @@
     public enum GlyphMode : byte
     {
         None = 0,
-        Ascii = 1,
-        Unicode = 2,
+        ASCII = 1,
+        UTF16 = 2,
         Palette = 129,
     }
 
@@ -19,8 +19,8 @@
     public enum MetadataMode : byte
     {
         None = 0,
-        OneByte = 1,
-        TwoBytes = 2,
+        EightBit = 1,
+        SixteenBit = 2,
     }
 
     public enum PaletteType : byte

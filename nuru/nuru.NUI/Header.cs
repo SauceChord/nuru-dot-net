@@ -1,6 +1,6 @@
 ﻿namespace nuru.NUI
 {
-    public struct ImageHeader
+    public struct Header
     {
         public string Signature;
         public byte Version;

@@ -1,0 +1,3 @@
+[submodule "bigendian"]
+	path = bigendian
+	url = https://github.com/SauceChord/big-endian-io-dotnet.git

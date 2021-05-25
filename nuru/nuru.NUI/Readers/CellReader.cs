@@ -1,4 +1,6 @@
-﻿namespace nuru.NUI.Readers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Readers
 {
     public class CellReader
     {
@@ -13,9 +15,9 @@
             this.metadata = metadata;
         }
 
-        public Cell Read()
+        public Cell Read(BigEndianBinaryReader reader)
         {
-            return new Cell(glyph.Read(), color.Read(), metadata.Read());
+            return new Cell(glyph.Read(reader), color.Read(reader), metadata.Read(reader));
         }
     }
 }

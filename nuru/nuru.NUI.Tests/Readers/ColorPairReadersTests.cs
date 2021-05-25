@@ -13,14 +13,14 @@ namespace nuru.NUI.Tests.Readers
         {
             base.Setup();
             voidReader = new ColorPairVoidReader();
-            uint4Reader = new ColorPairUInt4Reader(stream);
-            uint8Reader = new ColorPairUInt8Reader(stream);
+            uint4Reader = new ColorPairUInt4Reader();
+            uint8Reader = new ColorPairUInt8Reader();
         }
 
         [Test]
         public void TestReadVoid()
         {
-            Assert.That(voidReader.Read(), Is.EqualTo(default(ColorPair)));
+            Assert.That(voidReader.Read(null), Is.EqualTo(default(ColorPair)));
         }
 
         [TestCase(0x00, ExpectedResult = "0, 0")]
@@ -31,7 +31,7 @@ namespace nuru.NUI.Tests.Readers
         {
             writer.Write((byte)nibbles);
             RewindStream();
-            return uint4Reader.Read().ToString();
+            return uint4Reader.Read(reader).ToString();
         }
 
         [TestCase(0x0000, ExpectedResult = "0, 0")]
@@ -42,7 +42,7 @@ namespace nuru.NUI.Tests.Readers
         {
             writer.Write((ushort)nibbles);
             RewindStream();
-            return uint8Reader.Read().ToString();
+            return uint8Reader.Read(reader).ToString();
         }
     }
 }

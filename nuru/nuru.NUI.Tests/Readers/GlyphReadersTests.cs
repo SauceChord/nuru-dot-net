@@ -14,14 +14,14 @@ namespace nuru.NUI.Tests.Readers
         {
             base.Setup();
             spaceReader = new GlyphSpaceReader();
-            asciiReader = new GlyphASCIIReader(stream);
-            unicodeReader = new GlyphUnicodeReader(stream);
+            asciiReader = new GlyphASCIIReader();
+            unicodeReader = new GlyphUnicodeReader();
         }
 
         [Test]
         public void TestReadSpace()
         {
-            Assert.That(spaceReader.Read(), Is.EqualTo(' '));
+            Assert.That(spaceReader.Read(reader), Is.EqualTo(' '));
         }
 
         [TestCase('A')]
@@ -32,7 +32,7 @@ namespace nuru.NUI.Tests.Readers
         {
             writer.Write(Convert.ToByte(testCase));
             RewindStream();
-            Assert.That(asciiReader.Read(), Is.EqualTo(testCase));
+            Assert.That(asciiReader.Read(reader), Is.EqualTo(testCase));
             Assert.That(stream.Position, Is.EqualTo(1));
         }
 
@@ -44,7 +44,7 @@ namespace nuru.NUI.Tests.Readers
         {
             writer.Write(testCase);
             RewindStream();
-            Assert.That(unicodeReader.Read(), Is.EqualTo(testCase));
+            Assert.That(unicodeReader.Read(reader), Is.EqualTo(testCase));
             Assert.That(stream.Position, Is.EqualTo(2));
         }
     }

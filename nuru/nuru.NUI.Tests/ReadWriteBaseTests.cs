@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BigEndian.IO;
+using NUnit.Framework;
 using System.IO;
 using System.Text;
 
@@ -7,15 +8,15 @@ namespace nuru.NUI.Tests
     public class ReadWriteBaseTests
     {
         protected MemoryStream stream;
-        protected BinaryReader reader;
-        protected BinaryWriter writer;
+        protected BigEndianBinaryReader reader;
+        protected BigEndianBinaryWriter writer;
 
         [SetUp]
         public virtual void Setup()
         {
             stream = new MemoryStream();
-            reader = new BinaryReader(stream, Encoding.BigEndianUnicode, true);
-            writer = new BinaryWriter(stream, Encoding.BigEndianUnicode, true);
+            reader = new BigEndianBinaryReader(stream, Encoding.BigEndianUnicode, true);
+            writer = new BigEndianBinaryWriter(stream, Encoding.BigEndianUnicode, true);
         }
 
         public virtual void RewindStream()

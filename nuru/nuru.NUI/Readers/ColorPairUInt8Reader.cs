@@ -1,14 +1,10 @@
-﻿using System.IO;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Readers
 {
-    public class ColorPairUInt8Reader : ReaderBase, IColorPairReader
+    public class ColorPairUInt8Reader : IColorPairReader
     {
-        public ColorPairUInt8Reader(Stream stream) : base(stream)
-        {
-        }
-
-        public ColorPair Read()
+        public ColorPair Read(BigEndianBinaryReader reader)
         {
             byte background = reader.ReadByte();
             byte foreground = reader.ReadByte();

@@ -1,7 +1,9 @@
-﻿namespace nuru.NUI.Readers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Readers
 {
     public interface IGlyphReader
     {
-        char Read();
+        char Read(BigEndianBinaryReader reader);
     }
 }

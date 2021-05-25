@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using BigEndian.IO;
 using nuru.NUI.Readers;
 
 namespace nuru.NUI
 {
     public class ImageLoader
     {
-        public static Header LoadHeader(BinaryReader reader)
+        public static Header LoadHeader(BigEndianBinaryReader reader)
         {
             try
             {
@@ -44,8 +45,8 @@ namespace nuru.NUI
                 if (header.MetadataMode.IsUndefined())
                     throw new ImageLoadException($"Unknown metadata mode '{header.MetadataMode}'.");
 
-                header.Width = reader.ReadUInt16();
-                header.Height = reader.ReadUInt16();
+                header.Width = reader.ReadBigEndianUInt16();
+                header.Height = reader.ReadBigEndianUInt16();
                 header.KeyGlyph = reader.ReadByte();
                 header.KeyForeground = reader.ReadByte();
                 header.KeyBackground = reader.ReadByte();
@@ -61,70 +62,53 @@ namespace nuru.NUI
         }
 
 
-        public static Image LoadImage(BinaryReader reader)
+        public static Image LoadImage(BigEndianBinaryReader reader)
         {
             Header header = LoadHeader(reader);
-            Image image = new Image();
-            image.Width = header.Width;
-            image.Height = header.Height;
-            image.GlyphMode = header.GlyphMode;
-            image.ColorMode = header.ColorMode;
-            image.MetadataMode = header.MetadataMode;
-            image.GlyphPalette = header.GlyphPaletteName;
-            image.ColorPalette = header.ColorPaletteName;            
+            Image image = new Image
+            {
+                Width = header.Width,
+                Height = header.Height,
+                GlyphMode = header.GlyphMode,
+                ColorMode = header.ColorMode,
+                MetadataMode = header.MetadataMode,
+                GlyphPalette = header.GlyphPaletteName,
+                ColorPalette = header.ColorPaletteName
+            };
+
+
+            CellReaderFactory cellReaderFactory = new CellReaderFactory();
+            
+            cellReaderFactory.RegisterGlyphReader(GlyphMode.None, new GlyphSpaceReader());
+            cellReaderFactory.RegisterGlyphReader(GlyphMode.ASCII, new GlyphASCIIReader());
+            cellReaderFactory.RegisterGlyphReader(GlyphMode.UTF16, new GlyphUnicodeReader());
+            cellReaderFactory.RegisterGlyphReader(GlyphMode.Palette, new GlyphASCIIReader());
+
+            cellReaderFactory.RegisterColorPairReader(ColorMode.None, new ColorPairVoidReader());
+            cellReaderFactory.RegisterColorPairReader(ColorMode.FourBit, new ColorPairUInt4Reader());
+            cellReaderFactory.RegisterColorPairReader(ColorMode.EightBit, new ColorPairUInt8Reader());
+            cellReaderFactory.RegisterColorPairReader(ColorMode.Palette, new ColorPairUInt8Reader());
+
+            cellReaderFactory.RegisterMetadataReader(MetadataMode.None, new MetadataVoidReader());
+            cellReaderFactory.RegisterMetadataReader(MetadataMode.EightBit, new MetadataUInt8Reader());
+            cellReaderFactory.RegisterMetadataReader(MetadataMode.SixteenBit, new MetadataUInt16Reader());
+
+            var cellMode = new CellMode()
+            {
+                Glyph = header.GlyphMode,
+                Color = header.ColorMode,
+                Metadata = header.MetadataMode
+            };
+
+            var cellReader = cellReaderFactory.Build(cellMode);
 
             Cell[,] cells = new Cell[image.Width, image.Height];
-
-            IGlyphReader glyphReader = GetGlyphReader(header.GlyphMode, reader.BaseStream);
-            IColorPairReader colorReader = GetColorReader(header.ColorMode, reader.BaseStream);
-            IMetadataReader metadataReader = GetMetadataReader(header.MetadataMode, reader.BaseStream);
-            CellReader cellReader = new CellReader(glyphReader, colorReader, metadataReader);
-
             for (ushort row = 0; row < image.Height; ++row)
                 for (ushort col = 0; col < image.Width; ++col)
-                    cells[col, row] = cellReader.Read();
-
+                    cells[col, row] = cellReader.Read(reader);
             image.Cells = cells;
 
             return image;
-        }
-
-        private static IMetadataReader GetMetadataReader(MetadataMode mode, Stream stream)
-        {
-            switch (mode)
-            {
-                case MetadataMode.None: return new MetadataVoidReader();
-                case MetadataMode.EightBit: return new MetadataUInt8Reader(stream);
-                case MetadataMode.SixteenBit: return new MetadataUInt16Reader(stream);
-                default:
-                    throw new InvalidOperationException();
-            }
-        }
-
-        private static IColorPairReader GetColorReader(ColorMode mode, Stream stream)
-        {
-            switch (mode)
-            {
-                case ColorMode.None: return new ColorPairVoidReader();
-                case ColorMode.FourBit: return new ColorPairUInt4Reader(stream);
-                case ColorMode.EightBit: return new ColorPairUInt8Reader(stream);
-                case ColorMode.Palette: return new ColorPairUInt8Reader(stream);
-                default:
-                    throw new InvalidOperationException();
-            }
-        }
-
-        private static IGlyphReader GetGlyphReader(GlyphMode mode, Stream stream)
-        {
-            switch (mode)
-            {
-                case GlyphMode.None: return new GlyphSpaceReader();
-                case GlyphMode.ASCII: return new GlyphASCIIReader(stream);
-                case GlyphMode.UTF16: return new GlyphUnicodeReader(stream);
-                case GlyphMode.Palette: return new GlyphASCIIReader(stream);
-                default:
-                    throw new InvalidOperationException();
-            }
         }
     }
 }

@@ -5,9 +5,9 @@ namespace nuru.NUI.Readers
 {
     public class CellReaderFactory
     {
-        Dictionary<GlyphMode, IGlyphReader> glyphReaders = new Dictionary<GlyphMode, IGlyphReader>();
-        Dictionary<ColorMode, IColorPairReader> colorPairReaders = new Dictionary<ColorMode, IColorPairReader>();
-        Dictionary<MetadataMode, IMetadataReader> metadataReaders = new Dictionary<MetadataMode, IMetadataReader>();
+        readonly Dictionary<GlyphMode, IGlyphReader> glyphReaders = new Dictionary<GlyphMode, IGlyphReader>();
+        readonly Dictionary<ColorMode, IColorPairReader> colorPairReaders = new Dictionary<ColorMode, IColorPairReader>();
+        readonly Dictionary<MetadataMode, IMetadataReader> metadataReaders = new Dictionary<MetadataMode, IMetadataReader>();
 
         public CellReader Build(CellMode cellMode)
         {

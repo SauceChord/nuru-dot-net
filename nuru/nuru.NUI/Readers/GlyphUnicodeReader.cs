@@ -1,14 +1,10 @@
-﻿using System.IO;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Readers
 {
-    public class GlyphUnicodeReader : ReaderBase, IGlyphReader
+    public class GlyphUnicodeReader : IGlyphReader
     {
-        public GlyphUnicodeReader(Stream stream) : base(stream)
-        {
-        }
-
-        public char Read()
+        public char Read(BigEndianBinaryReader reader)
         {
             return reader.ReadChar();
         }

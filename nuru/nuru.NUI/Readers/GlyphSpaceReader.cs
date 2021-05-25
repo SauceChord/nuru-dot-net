@@ -1,8 +1,10 @@
-﻿namespace nuru.NUI.Readers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Readers
 {
     public class GlyphSpaceReader : IGlyphReader
     {
-        public char Read()
+        public char Read(BigEndianBinaryReader reader)
         {
             return ' ';
         }

@@ -1,8 +1,10 @@
-﻿namespace nuru.NUI.Readers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Readers
 {
     public class ColorPairVoidReader : IColorPairReader
     {
-        public ColorPair Read()
+        public ColorPair Read(BigEndianBinaryReader reader)
         {
             return default;
         }

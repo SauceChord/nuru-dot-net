@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using BigEndian.IO;
 using NUnit.Framework;
 
 namespace nuru.NUI.Tests
@@ -26,7 +27,7 @@ namespace nuru.NUI.Tests
         public void TestLoadWithEmptyReader()
         {
             var emptyStream = new MemoryStream();
-            var emptyReader = new BinaryReader(emptyStream);
+            var emptyReader = new BigEndianBinaryReader(emptyStream);
 
             var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(emptyReader));
             Assert.That(exception.Message, Is.EqualTo("No valid NUI signature found."));
@@ -38,7 +39,7 @@ namespace nuru.NUI.Tests
             // Proper signature should be NURUIMG
             // Here we supply it with a zero length string.
             var badSigStream = new MemoryStream(new byte[7]);
-            var badSigReader = new BinaryReader(badSigStream);
+            var badSigReader = new BigEndianBinaryReader(badSigStream);
 
             var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badSigReader));
             Assert.That(exception.Message, Is.EqualTo("No valid NUI signature found."));
@@ -48,15 +49,15 @@ namespace nuru.NUI.Tests
         [TestCase(2, 255)]
         public void TestLoadWithUnsupportedVersion(byte badRangeStart, byte badRangeEnd)
         {
-            for (int badVersion = badRangeStart; badVersion <= badRangeEnd; ++badVersion)
+            for (byte badVersion = badRangeStart; badVersion < badRangeEnd; ++badVersion)
             {
                 var badVersionStream = new MemoryStream();
-                var badVersionWriter = new BinaryWriter(badVersionStream);
+                var badVersionWriter = new BigEndianBinaryWriter(badVersionStream);
                 badVersionWriter.Write(Encoding.ASCII.GetBytes("NURUIMG"));
                 badVersionWriter.Write(badVersion);
 
                 badVersionStream.Position = 0;
-                var badVersionReader = new BinaryReader(badVersionStream);
+                var badVersionReader = new BigEndianBinaryReader(badVersionStream);
 
                 var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badVersionReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unsupported version '{badVersion}'."));
@@ -67,15 +68,15 @@ namespace nuru.NUI.Tests
         [TestCase(130, 255)]
         public void TestLoadWithBadGlyphMode(byte badRangeStart, byte badRangeEnd)
         {
-            for (int badGlyph = badRangeStart; badGlyph <= badRangeEnd; ++badGlyph)
+            for (byte badGlyph = badRangeStart; badGlyph < badRangeEnd; ++badGlyph)
             {
                 var badGlyphStream = new MemoryStream();
-                var badGlyphWriter = new BinaryWriter(badGlyphStream);
+                var badGlyphWriter = new BigEndianBinaryWriter(badGlyphStream);
                 badGlyphWriter.Write(Encoding.ASCII.GetBytes("NURUIMG"));
                 badGlyphWriter.Write(VersionOne);
                 badGlyphWriter.Write(badGlyph);
                 badGlyphStream.Position = 0;
-                var badGlyphReader = new BinaryReader(badGlyphStream);
+                var badGlyphReader = new BigEndianBinaryReader(badGlyphStream);
 
                 var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badGlyphReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown glyph mode '{badGlyph}'."));
@@ -86,16 +87,16 @@ namespace nuru.NUI.Tests
         [TestCase(131, 255)]
         public void TestLoadWithBadColorMode(byte badRangeStart, byte badRangeEnd)
         {
-            for (int badColor = badRangeStart; badColor <= badRangeEnd; ++badColor)
+            for (byte badColor = badRangeStart; badColor < badRangeEnd; ++badColor)
             {
                 var badColorStream = new MemoryStream();
-                var badColorWriter = new BinaryWriter(badColorStream);
+                var badColorWriter = new BigEndianBinaryWriter(badColorStream);
                 badColorWriter.Write(Encoding.ASCII.GetBytes("NURUIMG"));
                 badColorWriter.Write(VersionOne);
                 badColorWriter.Write((byte)GlyphMode.None);
                 badColorWriter.Write(badColor);
                 badColorStream.Position = 0;
-                var badColorReader = new BinaryReader(badColorStream);
+                var badColorReader = new BigEndianBinaryReader(badColorStream);
 
                 var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badColorReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown color mode '{badColor}'."));
@@ -106,13 +107,13 @@ namespace nuru.NUI.Tests
         public void TestLoadWithBadGlyphAndColorMode()
         {
             var badColorStream = new MemoryStream();
-            var badColorWriter = new BinaryWriter(badColorStream);
+            var badColorWriter = new BigEndianBinaryWriter(badColorStream);
             badColorWriter.Write(Encoding.ASCII.GetBytes("NURUIMG"));
             badColorWriter.Write(VersionOne);
             badColorWriter.Write((byte)GlyphMode.None);
             badColorWriter.Write((byte)ColorMode.None); // Docs say cant be none if glyph is none
             badColorStream.Position = 0;
-            var badColorReader = new BinaryReader(badColorStream);
+            var badColorReader = new BigEndianBinaryReader(badColorStream);
 
             var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badColorReader));
             Assert.That(exception.Message, Is.EqualTo("Color mode can't be None (0) when glyph mode is set to None (0)."));
@@ -121,17 +122,17 @@ namespace nuru.NUI.Tests
         [TestCase(3, 255)]
         public void TestLoadWithBadMetadataMode(byte badRangeStart, byte badRangeEnd)
         {
-            for (int badMetadata = badRangeStart; badMetadata <= badRangeEnd; ++badMetadata)
+            for (byte badMetadata = badRangeStart; badMetadata < badRangeEnd; ++badMetadata)
             {
                 var badMetadataStream = new MemoryStream();
-                var badMetadataWriter = new BinaryWriter(badMetadataStream);
+                var badMetadataWriter = new BigEndianBinaryWriter(badMetadataStream);
                 badMetadataWriter.Write(Encoding.ASCII.GetBytes("NURUIMG"));
                 badMetadataWriter.Write(VersionOne);
                 badMetadataWriter.Write((byte)GlyphMode.None);
                 badMetadataWriter.Write((byte)ColorMode.FourBit);
                 badMetadataWriter.Write(badMetadata);
                 badMetadataStream.Position = 0;
-                var badMetadataReader = new BinaryReader(badMetadataStream);
+                var badMetadataReader = new BigEndianBinaryReader(badMetadataStream);
 
                 var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(badMetadataReader));
                 Assert.That(exception.Message, Is.EqualTo($"Unknown metadata mode '{badMetadata}'."));
@@ -147,14 +148,14 @@ namespace nuru.NUI.Tests
         public void TestLoadingHeader(ushort width, ushort height)
         {
             var stream = new MemoryStream();
-            var writer = new BinaryWriter(stream);
+            var writer = new BigEndianBinaryWriter(stream);
             writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.Palette);
             writer.Write((byte)ColorMode.FourBit);
             writer.Write((byte)MetadataMode.SixteenBit);
-            writer.Write(width);
-            writer.Write(height);
+            writer.WriteBigEndian(width);
+            writer.WriteBigEndian(height);
             writer.Write((byte)32);
             writer.Write((byte)15);
             writer.Write((byte)1);
@@ -162,7 +163,7 @@ namespace nuru.NUI.Tests
             writer.Write(Encoding.ASCII.GetBytes("COL_PAL"));
 
             stream.Position = 0;
-            var reader = new BinaryReader(stream);
+            var reader = new BigEndianBinaryReader(stream);
             var header = ImageLoader.LoadHeader(reader);
 
             Assert.That(header.Signature, Is.EqualTo("NURUIMG"));
@@ -183,7 +184,7 @@ namespace nuru.NUI.Tests
         public void TestLoadingBrokenHeader()
         {
             var stream = new MemoryStream();
-            var writer = new BinaryWriter(stream);
+            var writer = new BigEndianBinaryWriter(stream);
             writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.Palette);
@@ -191,7 +192,7 @@ namespace nuru.NUI.Tests
             writer.Write((byte)MetadataMode.SixteenBit);
             writer.Write((byte)0); // Should be a ushort width here, but faking broken file.
             stream.Position = 0;
-            var reader = new BinaryReader(stream);
+            var reader = new BigEndianBinaryReader(stream);
             
             var exception = Assert.Throws<ImageLoadException>(() => ImageLoader.LoadHeader(reader));
             Assert.That(exception.Message, Is.EqualTo("Could not read stream."));
@@ -202,23 +203,23 @@ namespace nuru.NUI.Tests
         public void TestLoadingEmptyImage()
         {
             var stream = new MemoryStream();
-            var writer = new BinaryWriter(stream);
+            var writer = new BigEndianBinaryWriter(stream);
             writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.ASCII);
             writer.Write((byte)ColorMode.FourBit);
             writer.Write((byte)MetadataMode.None);
-            writer.Write((ushort)0); // width
-            writer.Write((ushort)0); // height
+            writer.WriteBigEndian((ushort)0); // width
+            writer.WriteBigEndian((ushort)0); // height
             writer.Write((byte)32);
             writer.Write((byte)15);
             writer.Write((byte)1);
             writer.Write(Encoding.ASCII.GetBytes("GLY_PAL"));
             writer.Write(Encoding.ASCII.GetBytes("COL_PAL"));
-            // image follows, but it's 0x0 characters, so should return empty image.
+            // image follows, but it's 0 by 0 characters, so should return empty image.
             stream.Position = 0;
 
-            Image image = ImageLoader.LoadImage(new BinaryReader(stream));
+            Image image = ImageLoader.LoadImage(new BigEndianBinaryReader(stream));
 
             Assert.That(image.Width, Is.EqualTo(0));
             Assert.That(image.Height, Is.EqualTo(0));
@@ -235,14 +236,14 @@ namespace nuru.NUI.Tests
         public void TestLoading1pxImage()
         {
             var stream = new MemoryStream();
-            var writer = new BinaryWriter(stream);
+            var writer = new BigEndianBinaryWriter(stream);
             writer.Write(Encoding.ASCII.GetBytes("NURUIMG"));
             writer.Write(VersionOne);
             writer.Write((byte)GlyphMode.ASCII);
             writer.Write((byte)ColorMode.FourBit);
             writer.Write((byte)MetadataMode.SixteenBit);
-            writer.Write((ushort)1); // width
-            writer.Write((ushort)1); // height
+            writer.WriteBigEndian((ushort)1); // width
+            writer.WriteBigEndian((ushort)1); // height
             writer.Write((byte)32);
             writer.Write((byte)15);
             writer.Write((byte)1);
@@ -252,11 +253,11 @@ namespace nuru.NUI.Tests
             Cell expectedCell = new Cell('A', 2, 4, 22334);
             writer.Write(expectedCell.PackCharacter());
             writer.Write(expectedCell.PackColors());
-            writer.Write(expectedCell.Metadata);
+            writer.WriteBigEndian(expectedCell.Metadata);
 
             stream.Position = 0;
 
-            Image image = ImageLoader.LoadImage(new BinaryReader(stream));
+            Image image = ImageLoader.LoadImage(new BigEndianBinaryReader(stream));
 
             Assert.That(image.Width, Is.EqualTo(1));
             Assert.That(image.Height, Is.EqualTo(1));

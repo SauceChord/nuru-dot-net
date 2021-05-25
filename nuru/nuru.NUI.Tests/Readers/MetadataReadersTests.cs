@@ -13,14 +13,14 @@ namespace nuru.NUI.Tests.Readers
         {
             base.Setup();
             voidReader = new MetadataVoidReader();
-            uint8Reader = new MetadataUInt8Reader(stream);
-            uint16Reader = new MetadataUInt16Reader(stream);
+            uint8Reader = new MetadataUInt8Reader();
+            uint16Reader = new MetadataUInt16Reader();
         }
 
         [Test]
         public void TestReadVoid()
         {
-            Assert.That(voidReader.Read(), Is.EqualTo(0));
+            Assert.That(voidReader.Read(reader), Is.EqualTo(0));
         }
 
         [TestCase(0)]
@@ -31,7 +31,7 @@ namespace nuru.NUI.Tests.Readers
         {
             writer.Write((byte)testCase);
             RewindStream();
-            Assert.That(uint8Reader.Read(), Is.EqualTo(testCase));
+            Assert.That(uint8Reader.Read(reader), Is.EqualTo(testCase));
             Assert.That(stream.Position, Is.EqualTo(1));
         }
 
@@ -41,9 +41,9 @@ namespace nuru.NUI.Tests.Readers
         [TestCase(65535)]
         public void TestReadUInt16(int testCase)
         {
-            writer.Write((ushort)testCase);
+            writer.WriteBigEndian((ushort)testCase);
             RewindStream();
-            Assert.That(uint16Reader.Read(), Is.EqualTo(testCase));
+            Assert.That(uint16Reader.Read(reader), Is.EqualTo(testCase));
             Assert.That(stream.Position, Is.EqualTo(2));
         }
     }

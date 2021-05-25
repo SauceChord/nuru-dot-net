@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BigEndian.IO;
+using NUnit.Framework;
 using nuru.NUI.Readers;
 
 namespace nuru.NUI.Tests.Readers
@@ -18,23 +19,23 @@ namespace nuru.NUI.Tests.Readers
         [Test]
         public void ReadCellCallsInOrder()
         {
-            Cell c = cellReader.Read();
+            cellReader.Read(null);
             Assert.That(calls, Is.EqualTo("GCM"));
         }
 
-        char IGlyphReader.Read()
+        char IGlyphReader.Read(BigEndianBinaryReader reader)
         {
             calls += "G";
             return default;
         }
 
-        ColorPair IColorPairReader.Read()
+        ColorPair IColorPairReader.Read(BigEndianBinaryReader reader)
         {
             calls += "C";
             return default;
         }
 
-        ushort IMetadataReader.Read()
+        ushort IMetadataReader.Read(BigEndianBinaryReader reader)
         {
             calls += "M";
             return default;

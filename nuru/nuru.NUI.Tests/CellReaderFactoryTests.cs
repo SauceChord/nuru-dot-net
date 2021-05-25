@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BigEndian.IO;
+using NUnit.Framework;
 using nuru.NUI.Readers;
 using System;
 
@@ -61,23 +62,23 @@ namespace nuru.NUI.Tests
             var cellReader = factory.Build(bigCellMode);
 
             Assert.That(cellReader, Is.Not.EqualTo(null));
-            Assert.That(cellReader.Read().Character, Is.EqualTo(' '));
-            Assert.That(cellReader.Read().Colors.Foreground, Is.EqualTo(1));
-            Assert.That(cellReader.Read().Colors.Background, Is.EqualTo(2));
-            Assert.That(cellReader.Read().Metadata, Is.EqualTo(200));
+            Assert.That(cellReader.Read(null).Character, Is.EqualTo(' '));
+            Assert.That(cellReader.Read(null).Colors.Foreground, Is.EqualTo(1));
+            Assert.That(cellReader.Read(null).Colors.Background, Is.EqualTo(2));
+            Assert.That(cellReader.Read(null).Metadata, Is.EqualTo(200));
         }
 
-        char IGlyphReader.Read()
+        char IGlyphReader.Read(BigEndianBinaryReader reader)
         {
             return ' ';
         }
 
-        ColorPair IColorPairReader.Read()
+        ColorPair IColorPairReader.Read(BigEndianBinaryReader reader)
         {
             return new ColorPair(1, 2);
         }
 
-        ushort IMetadataReader.Read()
+        ushort IMetadataReader.Read(BigEndianBinaryReader reader)
         {
             return 200;
         }

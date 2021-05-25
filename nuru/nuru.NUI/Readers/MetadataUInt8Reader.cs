@@ -1,14 +1,10 @@
-﻿using System.IO;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Readers
 {
-    public class MetadataUInt8Reader : ReaderBase, IMetadataReader
+    public class MetadataUInt8Reader : IMetadataReader
     {
-        public MetadataUInt8Reader(Stream stream) : base(stream)
-        {
-        }
-
-        public ushort Read()
+        public ushort Read(BigEndianBinaryReader reader)
         {
             return reader.ReadByte();
         }

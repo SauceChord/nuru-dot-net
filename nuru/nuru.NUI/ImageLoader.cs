@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using nuru.NUI.Readers;
 
 namespace nuru.NUI
 {
@@ -74,16 +75,56 @@ namespace nuru.NUI
 
             Cell[,] cells = new Cell[image.Width, image.Height];
 
-            CellMode mode = new CellMode(header.GlyphMode, header.ColorMode, header.MetadataMode);
-            BinaryCellReader cellReader = new BinaryCellReader(reader.BaseStream, mode);
+            IGlyphReader glyphReader = GetGlyphReader(header.GlyphMode, reader.BaseStream);
+            IColorPairReader colorReader = GetColorReader(header.ColorMode, reader.BaseStream);
+            IMetadataReader metadataReader = GetMetadataReader(header.MetadataMode, reader.BaseStream);
+            CellReader cellReader = new CellReader(glyphReader, colorReader, metadataReader);
 
             for (ushort row = 0; row < image.Height; ++row)
                 for (ushort col = 0; col < image.Width; ++col)
-                    cells[col, row] = cellReader.ReadCell();
+                    cells[col, row] = cellReader.Read();
 
             image.Cells = cells;
 
             return image;
+        }
+
+        private static IMetadataReader GetMetadataReader(MetadataMode mode, Stream stream)
+        {
+            switch (mode)
+            {
+                case MetadataMode.None: return new MetadataVoidReader();
+                case MetadataMode.EightBit: return new MetadataUInt8Reader(stream);
+                case MetadataMode.SixteenBit: return new MetadataUInt16Reader(stream);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static IColorPairReader GetColorReader(ColorMode mode, Stream stream)
+        {
+            switch (mode)
+            {
+                case ColorMode.None: return new ColorPairVoidReader();
+                case ColorMode.FourBit: return new ColorPairUInt4Reader(stream);
+                case ColorMode.EightBit: return new ColorPairUInt8Reader(stream);
+                case ColorMode.Palette: return new ColorPairUInt8Reader(stream);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static IGlyphReader GetGlyphReader(GlyphMode mode, Stream stream)
+        {
+            switch (mode)
+            {
+                case GlyphMode.None: return new GlyphSpaceReader();
+                case GlyphMode.ASCII: return new GlyphASCIIReader(stream);
+                case GlyphMode.UTF16: return new GlyphUnicodeReader(stream);
+                case GlyphMode.Palette: return new GlyphASCIIReader(stream);
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
 }

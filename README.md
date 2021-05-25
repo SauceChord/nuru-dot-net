@@ -1,8 +1,5 @@
 <img width="100%" src="nuru-logo.png" alt="nuru dot net"> 
 
-# nuru-dot-net
-nuru file library
-
 A C# Dot Net implementation of domsson's nuru reader.
 https://github.com/domsson/nuru
 

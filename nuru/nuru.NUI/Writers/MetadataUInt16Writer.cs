@@ -1,14 +1,10 @@
-﻿using System.IO;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Writers
 {
-    public class MetadataUInt16Writer : WriterBase, IMetadataWriter
+    public class MetadataUInt16Writer : IMetadataWriter
     {
-        public MetadataUInt16Writer(Stream stream) : base(stream)
-        {
-        }
-
-        public void Write(ushort metadata)
+        public void Write(BigEndianBinaryWriter writer, ushort metadata)
         {
             writer.WriteBigEndian(metadata);
         }

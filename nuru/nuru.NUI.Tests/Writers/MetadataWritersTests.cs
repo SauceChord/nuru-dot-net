@@ -13,14 +13,14 @@ namespace nuru.NUI.Tests.Writers
         {
             base.Setup();
             voidWriter = new MetadataVoidWriter();
-            uint8Writer = new MetadataUInt8Writer(stream);
-            uint16Writer = new MetadataUInt16Writer(stream);
+            uint8Writer = new MetadataUInt8Writer();
+            uint16Writer = new MetadataUInt16Writer();
         }
 
         [Test]
         public void TestWriteVoid()
         {
-            voidWriter.Write(312);
+            voidWriter.Write(writer, 312);
             Assert.That(stream.Position, Is.EqualTo(0));
         }
 
@@ -30,7 +30,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase(255)]
         public void TestWriteUInt8(int testCase)
         {
-            uint8Writer.Write((ushort)testCase);
+            uint8Writer.Write(writer, (ushort)testCase);
             Assert.That(stream.Position, Is.EqualTo(1));
             RewindStream();
             Assert.That(reader.ReadByte(), Is.EqualTo(testCase));
@@ -42,7 +42,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase(65535)]
         public void TestWriteUInt16(int testCase)
         {
-            uint16Writer.Write((ushort)testCase);
+            uint16Writer.Write(writer, (ushort)testCase);
             Assert.That(stream.Position, Is.EqualTo(2));
             RewindStream();
             Assert.That(reader.ReadBigEndianUInt16(), Is.EqualTo(testCase));

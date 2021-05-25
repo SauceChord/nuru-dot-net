@@ -14,14 +14,14 @@ namespace nuru.NUI.Tests.Writers
         {
             base.Setup();
             voidWriter = new ColorPairVoidWriter();
-            uint4Writer = new ColorPairUInt4Writer(stream);
-            uint8Writer = new ColorPairUInt8Writer(stream);
+            uint4Writer = new ColorPairUInt4Writer();
+            uint8Writer = new ColorPairUInt8Writer();
         }
 
         [Test]
         public void TestWriteVoid()
         {
-            voidWriter.Write(default);
+            voidWriter.Write(writer, default);
         }
 
         [TestCase(0, 0, ExpectedResult = "00000000")]
@@ -30,7 +30,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase(255, 0, ExpectedResult = "11110000")]
         public string TestWriteUInt4(int foreground, int background)
         {
-            uint4Writer.Write(new ColorPair((byte)foreground, (byte)background));
+            uint4Writer.Write(writer, new ColorPair((byte)foreground, (byte)background));
             RewindStream();
             return ReadByteAsBinaryString();
         }
@@ -42,7 +42,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase(255, 0, ExpectedResult = "0000000011111111")]
         public string TestWriteUInt8(int foreground, int background)
         {
-            uint8Writer.Write(new ColorPair((byte)foreground, (byte)background));
+            uint8Writer.Write(writer, new ColorPair((byte)foreground, (byte)background));
             RewindStream();
             return ReadByteAsBinaryString() + ReadByteAsBinaryString();
         }

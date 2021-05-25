@@ -13,14 +13,14 @@ namespace nuru.NUI.Tests.Writers
         {
             base.Setup();
             voidWriter = new GlyphVoidWriter();
-            asciiWriter = new GlyphASCIIWriter(stream);
-            unicodeWriter = new GlyphUnicodeWriter(stream);
+            asciiWriter = new GlyphASCIIWriter();
+            unicodeWriter = new GlyphUnicodeWriter();
         }
 
         [Test]
         public void TestWriteVoidDoesNothing()
         {
-            voidWriter.Write('A');
+            voidWriter.Write(writer, 'A');
         }
 
         [TestCase(' ', ExpectedResult = 0x20)]
@@ -28,7 +28,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase('ÿ', ExpectedResult = 0xff)]
         public byte TestWriteASCII(char testCase)
         {
-            asciiWriter.Write(testCase);
+            asciiWriter.Write(writer, testCase);
             RewindStream();
             Assert.That(stream.Length, Is.EqualTo(1));
             return reader.ReadByte();
@@ -41,7 +41,7 @@ namespace nuru.NUI.Tests.Writers
         [TestCase('ℇ', ExpectedResult = 0x0721)]
         public ushort TestWriteUnicode(char testCase)
         {
-            unicodeWriter.Write(testCase);
+            unicodeWriter.Write(writer, testCase);
             RewindStream();
             Assert.That(stream.Length, Is.EqualTo(2));
             return reader.ReadUInt16();

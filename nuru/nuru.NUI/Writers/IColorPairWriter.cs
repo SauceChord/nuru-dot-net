@@ -1,7 +1,9 @@
-﻿namespace nuru.NUI.Writers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Writers
 {
     public interface IColorPairWriter
     {
-        void Write(ColorPair pair);
+        void Write(BigEndianBinaryWriter writer, ColorPair pair);
     }
 }

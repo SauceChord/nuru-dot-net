@@ -1,7 +1,9 @@
-﻿namespace nuru.NUI.Writers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Writers
 {
     public interface IGlyphWriter
     {
-        void Write(char glyph);
+        void Write(BigEndianBinaryWriter writer, char glyph);
     }
 }

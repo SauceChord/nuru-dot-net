@@ -1,15 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using BigEndian.IO;
+using System;
 
 namespace nuru.NUI.Writers
 {
-    public class GlyphASCIIWriter : WriterBase, IGlyphWriter
+    public class GlyphASCIIWriter : IGlyphWriter
     {
-        public GlyphASCIIWriter(Stream stream) : base(stream)
-        {
-        }
-
-        public void Write(char glyph)
+        public void Write(BigEndianBinaryWriter writer, char glyph)
         {
             writer.Write(Convert.ToByte(glyph));
         }

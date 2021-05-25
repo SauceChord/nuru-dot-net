@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Writers
 {
     public class GlyphVoidWriter : IGlyphWriter
     {
-        public void Write(char glyph)
+        public void Write(BigEndianBinaryWriter writer, char glyph)
         {
         }
     }

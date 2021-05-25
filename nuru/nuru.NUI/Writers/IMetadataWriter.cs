@@ -1,7 +1,9 @@
-﻿namespace nuru.NUI.Writers
+﻿using BigEndian.IO;
+
+namespace nuru.NUI.Writers
 {
     public interface IMetadataWriter
     {
-        void Write(ushort metadata);
+        void Write(BigEndianBinaryWriter writer, ushort metadata);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using BigEndian.IO;
@@ -256,7 +257,7 @@ namespace nuru.NUI.Tests
             writer.WriteBigEndian(expectedCell.Metadata);
 
             stream.Position = 0;
-
+            
             Image image = ImageLoader.LoadImage(new BigEndianBinaryReader(stream));
 
             Assert.That(image.Width, Is.EqualTo(1));

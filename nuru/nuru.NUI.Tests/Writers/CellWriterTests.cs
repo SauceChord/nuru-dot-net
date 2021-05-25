@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BigEndian.IO;
+using NUnit.Framework;
 using nuru.NUI.Writers;
 
 namespace nuru.NUI.Tests.Writers
@@ -18,21 +19,21 @@ namespace nuru.NUI.Tests.Writers
         [Test]
         public void ReadCellCallsInOrder()
         {
-            cellWriter.Write(new Cell('A', new ColorPair(12, 2), 123));
+            cellWriter.Write(null, new Cell('A', new ColorPair(12, 2), 123));
             Assert.That(calls, Is.EqualTo("A12, 2123"));
         }
 
-        void IGlyphWriter.Write(char glyph)
+        void IGlyphWriter.Write(BigEndianBinaryWriter writer, char glyph)
         {
             calls += glyph;
         }
 
-        void IColorPairWriter.Write(ColorPair pair)
+        void IColorPairWriter.Write(BigEndianBinaryWriter writer, ColorPair pair)
         {
             calls += pair;
         }
 
-        void IMetadataWriter.Write(ushort metadata)
+        void IMetadataWriter.Write(BigEndianBinaryWriter writer, ushort metadata)
         {
             calls += metadata;
         }

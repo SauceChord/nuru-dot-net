@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BigEndian.IO;
 
 namespace nuru.NUI.Writers
 {
@@ -17,11 +15,11 @@ namespace nuru.NUI.Writers
             this.metadata = meta;
         }
 
-        public void Write(Cell cell)
+        public void Write(BigEndianBinaryWriter writer, Cell cell)
         {
-            glyph.Write(cell.Character);
-            color.Write(cell.Colors);
-            metadata.Write(cell.Metadata);
+            glyph.Write(writer, cell.Character);
+            color.Write(writer, cell.Colors);
+            metadata.Write(writer, cell.Metadata);
         }
     }
 }

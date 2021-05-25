@@ -45,7 +45,7 @@ namespace nuru.NUI.Tests.Writers
             uint16Writer.Write((ushort)testCase);
             Assert.That(stream.Position, Is.EqualTo(2));
             RewindStream();
-            Assert.That(reader.ReadUInt16(), Is.EqualTo(testCase));
+            Assert.That(reader.ReadBigEndianUInt16(), Is.EqualTo(testCase));
         }
     }
 }

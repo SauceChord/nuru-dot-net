@@ -10,7 +10,7 @@ namespace nuru.NUI.Writers
 
         public void Write(ushort metadata)
         {
-            writer.Write(metadata);
+            writer.WriteBigEndian(metadata);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace nuru.NUI.Writers
 
         public void Write(ColorPair pair)
         {
-            writer.Write(pair.Foreground); // high byte
-            writer.Write(pair.Background); // low byte
+            writer.Write(pair.Background); // big endian low byte
+            writer.Write(pair.Foreground); // big endian high byte
         }
     }
 }

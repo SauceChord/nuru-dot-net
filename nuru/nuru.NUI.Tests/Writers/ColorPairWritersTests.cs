@@ -35,10 +35,11 @@ namespace nuru.NUI.Tests.Writers
             return ReadByteAsBinaryString();
         }
 
-        [TestCase(0, 0, ExpectedResult = "0000000000000000")]
-        [TestCase(1, 2, ExpectedResult = "0000000100000010")]
-        [TestCase(0, 255, ExpectedResult = "0000000011111111")]
-        [TestCase(255, 0, ExpectedResult = "1111111100000000")]
+        // note: strings are big endian
+        [TestCase(0, 0, ExpectedResult = "0000000000000000")] 
+        [TestCase(1, 2, ExpectedResult = "0000001000000001")]
+        [TestCase(0, 255, ExpectedResult = "1111111100000000")]
+        [TestCase(255, 0, ExpectedResult = "0000000011111111")]
         public string TestWriteUInt8(int foreground, int background)
         {
             uint8Writer.Write(new ColorPair((byte)foreground, (byte)background));

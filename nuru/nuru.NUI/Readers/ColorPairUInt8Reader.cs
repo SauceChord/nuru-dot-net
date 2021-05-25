@@ -6,8 +6,8 @@ namespace nuru.NUI.Readers
     {
         public ColorPair Read(BigEndianBinaryReader reader)
         {
-            byte background = reader.ReadByte();
-            byte foreground = reader.ReadByte();
+            byte background = reader.ReadByte(); // big endian low byte
+            byte foreground = reader.ReadByte(); // big endian high byte
             return new ColorPair(foreground, background);
         }
     }

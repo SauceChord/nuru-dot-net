@@ -3,7 +3,7 @@ using nuru.NUI.Readers;
 
 namespace nuru.NUI.Tests.Readers
 {
-    public class TestCellReader : TestReadWriteBase, IGlyphReader, IColorPairReader, IMetadataReader
+    public class TestCellReader : ReadWriteBaseTests, IGlyphReader, IColorPairReader, IMetadataReader
     {
         protected string calls;
         protected CellReader cellReader;

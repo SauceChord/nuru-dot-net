@@ -3,7 +3,7 @@ using nuru.NUI.Readers;
 
 namespace nuru.NUI.Tests.Readers
 {
-    public class TestColorPairReaders : TestReadWriteBase
+    public class TestColorPairReaders : ReadWriteBaseTests
     {
         protected IColorPairReader voidReader;
         protected IColorPairReader uint4Reader;

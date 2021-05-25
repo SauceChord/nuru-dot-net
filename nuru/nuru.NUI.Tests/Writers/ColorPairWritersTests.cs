@@ -4,7 +4,7 @@ using System;
 
 namespace nuru.NUI.Tests.Writers
 {
-    public class TestColorPairWriters : TestReadWriteBase
+    public class TestColorPairWriters : ReadWriteBaseTests
     {
         IColorPairWriter voidWriter;
         IColorPairWriter uint4Writer;

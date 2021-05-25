@@ -3,7 +3,7 @@ using nuru.NUI.Readers;
 
 namespace nuru.NUI.Tests.Readers
 {
-    public class TestMetadataReaders : TestReadWriteBase
+    public class TestMetadataReaders : ReadWriteBaseTests
     {
         protected IMetadataReader voidReader;
         protected IMetadataReader uint8Reader;

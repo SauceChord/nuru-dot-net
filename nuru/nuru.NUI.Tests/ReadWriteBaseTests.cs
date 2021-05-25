@@ -4,7 +4,7 @@ using System.Text;
 
 namespace nuru.NUI.Tests
 {
-    public class TestReadWriteBase
+    public class ReadWriteBaseTests
     {
         protected MemoryStream stream;
         protected BinaryReader reader;

@@ -3,7 +3,7 @@ using nuru.NUI.Writers;
 
 namespace nuru.NUI.Tests.Writers
 {
-    public class TestGlyphWriters : ReadWriteBaseTests
+    public class GlyphWritersTests : ReadWriteBaseTests
     {
         protected IGlyphWriter voidWriter;
         protected IGlyphWriter asciiWriter;

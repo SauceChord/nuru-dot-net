@@ -4,7 +4,7 @@ using System;
 
 namespace nuru.NUI.Tests.Readers
 {
-    public class TestGlyphReaders : ReadWriteBaseTests
+    public class GlyphReadersTests : ReadWriteBaseTests
     {
         protected IGlyphReader spaceReader;
         protected IGlyphReader asciiReader;

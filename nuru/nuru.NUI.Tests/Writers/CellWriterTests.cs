@@ -3,7 +3,7 @@ using nuru.NUI.Writers;
 
 namespace nuru.NUI.Tests.Writers
 {
-    public class TestCellWriter : ReadWriteBaseTests, IGlyphWriter, IColorPairWriter, IMetadataWriter
+    public class CellWriterTests : ReadWriteBaseTests, IGlyphWriter, IColorPairWriter, IMetadataWriter
     {
         protected string calls;
         protected CellWriter cellWriter;

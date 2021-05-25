@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace nuru.NUI.Tests
 {
-    public class TestColorPair
+    public class ColorPairTests
     {
         [TestCase(0, 1, ExpectedResult = "0, 1")]
         [TestCase(255, 0, ExpectedResult = "255, 0")]

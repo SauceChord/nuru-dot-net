@@ -3,7 +3,7 @@ using nuru.NUI.Writers;
 
 namespace nuru.NUI.Tests.Writers
 {
-    public class TestMetadataWriters : ReadWriteBaseTests
+    public class MetadataWritersTests : ReadWriteBaseTests
     {
         protected IMetadataWriter voidWriter;
         protected IMetadataWriter uint8Writer;

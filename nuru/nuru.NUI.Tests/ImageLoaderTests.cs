@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace nuru.NUI.Tests
 {
-    public class TestImageLoader
+    public class ImageLoaderTests
     {
         const byte VersionOne = 1;
 

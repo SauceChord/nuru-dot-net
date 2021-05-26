@@ -34,6 +34,7 @@ namespace nuru.Unit.Tests.IO.NUI
             return uint4Reader.Read(reader).ToString();
         }
 
+        [Ignore("Waiting for domsson's say about endianness")]
         [TestCase(0x0000, ExpectedResult = "0, 0")]
         [TestCase(0x00fe, ExpectedResult = "0, 254")]
         [TestCase(0xfe00, ExpectedResult = "254, 0")]

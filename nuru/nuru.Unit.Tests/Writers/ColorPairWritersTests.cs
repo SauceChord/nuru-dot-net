@@ -36,6 +36,7 @@ namespace nuru.IO.NUI.Tests.Writers
         }
 
         // note: strings are big endian
+        [Ignore("Waiting for domsson's say about endianness")]
         [TestCase(0, 0, ExpectedResult = "0000000000000000")] 
         [TestCase(1, 2, ExpectedResult = "0000001000000001")]
         [TestCase(0, 255, ExpectedResult = "1111111100000000")]

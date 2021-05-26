@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace nuru.IO
 {
@@ -62,6 +63,43 @@ namespace nuru.IO
         public CellConfig GetCellConfig()
         {
             return new CellConfig(GlyphMode, ColorMode, MetadataMode);
+        }
+
+        public override bool Equals(object obj)
+        {
+            NUIFileHeader other = obj as NUIFileHeader;
+            
+            if (other == null)
+                return false;
+
+            return Version == other.Version
+                && GlyphMode == other.GlyphMode
+                && ColorMode == other.ColorMode
+                && MetadataMode == other.MetadataMode
+                && Width == other.Width
+                && Height == other.Height
+                && KeyGlyph == other.KeyGlyph
+                && KeyForeground == other.KeyForeground
+                && KeyBackground == other.KeyBackground
+                && GlyphPaletteName == other.GlyphPaletteName
+                && ColorPaletteName == other.ColorPaletteName;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 850716638;
+            hashCode = hashCode * -1521134295 + Version.GetHashCode();
+            hashCode = hashCode * -1521134295 + GlyphMode.GetHashCode();
+            hashCode = hashCode * -1521134295 + ColorMode.GetHashCode();
+            hashCode = hashCode * -1521134295 + MetadataMode.GetHashCode();
+            hashCode = hashCode * -1521134295 + Width.GetHashCode();
+            hashCode = hashCode * -1521134295 + Height.GetHashCode();
+            hashCode = hashCode * -1521134295 + KeyGlyph.GetHashCode();
+            hashCode = hashCode * -1521134295 + KeyForeground.GetHashCode();
+            hashCode = hashCode * -1521134295 + KeyBackground.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(GlyphPaletteName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ColorPaletteName);
+            return hashCode;
         }
     }
 }

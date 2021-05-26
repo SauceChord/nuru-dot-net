@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace nuru.IO
 {
@@ -18,7 +19,9 @@ namespace nuru.IO
 
         public string ReadString(int length = 7)
         {
-            return Encoding.ASCII.GetString(reader.ReadBytes(length));
+            var bytes = reader.ReadBytes(length);
+            length = bytes.TakeWhile(b => b != 0).Count();
+            return Encoding.ASCII.GetString(bytes, 0, length);
         }
 
         public byte ReadUInt8()

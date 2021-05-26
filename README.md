@@ -2,9 +2,9 @@
 
 A C# .NET implementation of [domsson's nuru file format](https://github.com/domsson/nuru).
 
-# Warning
+# Current state
 
-At current moment, don't bother with this library as endianness is not correctly implemented yet. Using this library would just load corrupt images. So it has that going for it.
+Loads ASCII and Unicode images with 4bpc or 8bpc. Palette not yet implemented.
 
 # Submodules
 
@@ -12,3 +12,7 @@ This repository uses submodules, so after you clone, use the following commands 
 
     git submodule init
     git submodule update
+
+# Plans
+
+I realise the need to visualize the output so I am taking a detour to create a viewer which uses the library. This simple viewer will be coming together with this repository as an example use case.

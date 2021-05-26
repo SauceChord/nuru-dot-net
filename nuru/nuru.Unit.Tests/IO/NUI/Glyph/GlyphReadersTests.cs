@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using nuru.NUI.Readers;
+using nuru.Unit.Tests;
 using System;
 
-namespace nuru.NUI.Tests.Readers
+namespace nuru.IO.NUI.Unit.Tests
 {
     public class GlyphReadersTests : ReadWriteBaseTests
     {

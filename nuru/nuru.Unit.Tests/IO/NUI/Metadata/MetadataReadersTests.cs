@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using nuru.NUI.Readers;
+using nuru.Unit.Tests;
 
-namespace nuru.NUI.Tests.Readers
+namespace nuru.IO.NUI.Unit.Tests
 {
     public class MetadataReadersTests : ReadWriteBaseTests
     {

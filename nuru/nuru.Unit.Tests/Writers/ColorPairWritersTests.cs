@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using nuru.NUI.Writers;
+using nuru.Unit.Tests;
 using System;
 
-namespace nuru.NUI.Tests.Writers
+namespace nuru.IO.NUI.Tests.Writers
 {
     public class ColorWritersTests : ReadWriteBaseTests
     {

@@ -1,9 +1,8 @@
 ﻿using BigEndian.IO;
 using NUnit.Framework;
-using nuru.IO.NUI;
 using System;
 
-namespace nuru.Unit.Tests
+namespace nuru.IO.NUI.Unit.Tests
 {
     public class CellReaderFactoryTests : IGlyphReader, IColorReader, IMetadataReader
     {

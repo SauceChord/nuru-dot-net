@@ -1,8 +1,8 @@
 ﻿using BigEndian.IO;
 using NUnit.Framework;
-using nuru.IO.NUI;
+using nuru.Unit.Tests;
 
-namespace nuru.Unit.Tests.IO.NUI
+namespace nuru.IO.NUI.Unit.Tests
 {
     public class CellWriterTests : ReadWriteBaseTests, IGlyphWriter, IColorWriter, IMetadataWriter
     {

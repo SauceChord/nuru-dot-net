@@ -17,11 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IO\NUI\Cell\" />
-    <Folder Include="IO\NUI\Color\" />
-    <Folder Include="IO\NUI\Glyph\" />
-    <Folder Include="IO\NUI\Metadata\" />
     <Folder Include="IO\NUP\" />
+    <Folder Include="Readers\" />
   </ItemGroup>
 
 </Project>

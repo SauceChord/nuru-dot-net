@@ -33,8 +33,8 @@ namespace nuru.Viewer
                     var nuiGlyph = nuiFile.Payload[x, y].Glyph;
                     var nupGlyph = nupGlyphFile.UnicodePayload[(byte)nuiGlyph].ToString();
                     var nuiColor = nuiFile.Payload[x, y].Color;
-                    var rgbFG = nupColorFile.RGBPayload[nuiColor.Foreground];
-                    var rgbBG = nupColorFile.RGBPayload[nuiColor.Background];
+                    var rgbFG = Palette.ANSI8.ToRGB(nuiColor.Foreground);
+                    var rgbBG = Palette.ANSI8.ToRGB(nuiColor.Background);
 
                     output.AppendText(nupGlyph, rgbFG, rgbBG);
                 }

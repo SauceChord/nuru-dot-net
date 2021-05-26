@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="IO\NUP\" />
-    <Folder Include="Readers\" />
   </ItemGroup>
 
 </Project>

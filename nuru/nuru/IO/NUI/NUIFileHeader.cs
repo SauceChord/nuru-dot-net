@@ -67,9 +67,7 @@ namespace nuru.IO
 
         public override bool Equals(object obj)
         {
-            NUIFileHeader other = obj as NUIFileHeader;
-            
-            if (other == null)
+            if (!(obj is NUIFileHeader other))
                 return false;
 
             return Version == other.Version

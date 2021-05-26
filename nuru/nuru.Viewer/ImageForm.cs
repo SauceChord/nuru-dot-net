@@ -22,21 +22,23 @@ namespace nuru.Viewer
 
         private void ImageForm_Load(object sender, EventArgs e)
         {
-            var nuiFile = NUIFile.FromFile("nui/nuru_dot_net_alt.nui");
-            var nupGlyphFile = NUPFile.FromFile("nup/nurustd.nup");
-            var nupColorFile = NUPFile.FromFile("nup/aurora.nup");
-            
-            for (int y = 0; y < nuiFile.Header.Height; ++y)
-            {
-                for (int x = 0; x < nuiFile.Header.Width; ++x)
-                {
-                    var nuiGlyph = nuiFile.Payload[x, y].Glyph;
-                    var nupGlyph = nupGlyphFile.UnicodePayload[(byte)nuiGlyph].ToString();
-                    var nuiColor = nuiFile.Payload[x, y].Color;
-                    var rgbFG = Palette.ANSI8.ToRGB(nuiColor.Foreground);
-                    var rgbBG = Palette.ANSI8.ToRGB(nuiColor.Background);
+            NUIFile nuiFile = NUIFile.FromFile("nui/nuru_cat.nui");
+            NUPFile nupGlyphFile = NUPFile.FromFile("nup/nurustd.nup");
+            NUPFile nupColorFile = null;
+            FileImage image = new FileImage(nuiFile, nupGlyphFile, nupColorFile);
+            Render(image);
+        }
 
-                    output.AppendText(nupGlyph, rgbFG, rgbBG);
+        private void Render(IImage image)
+        {
+            for (int y = 0; y < image.Height; ++y)
+            {
+                for (int x = 0; x < image.Width; ++x)
+                {
+                    var ch = image.GetGlyph(x, y);
+                    var fg = image.GetForeground(x, y);
+                    var bg = image.GetBackground(x, y);
+                    output.AppendChar(ch, fg, bg);
                 }
                 output.AppendText("\n");
             }
@@ -44,7 +46,7 @@ namespace nuru.Viewer
     }
     public static class RichTextBoxExtensions
     {
-        public static void AppendText(this RichTextBox box, string text, RGB fgRGB, RGB bgRGB)
+        public static void AppendChar(this RichTextBox box, char c, RGB fgRGB, RGB bgRGB)
         {
             var fg = System.Drawing.Color.FromArgb(fgRGB.R, fgRGB.G, fgRGB.B);
             var bg = System.Drawing.Color.FromArgb(bgRGB.R, bgRGB.G, bgRGB.B);
@@ -53,7 +55,7 @@ namespace nuru.Viewer
 
             box.SelectionBackColor = bg;
             box.SelectionColor = fg;
-            box.AppendText(text);
+            box.AppendText(c.ToString());
             box.SelectionColor = box.ForeColor;
             box.SelectionBackColor = box.BackColor;
         }

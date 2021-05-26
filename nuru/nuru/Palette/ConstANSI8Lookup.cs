@@ -1,9 +1,9 @@
 ﻿namespace nuru.Palette
 {
-	public static class ANSI8
+	public class ConstANSI8Lookup : IRGBLookup
     {
 		// https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit
-		static readonly int[] rawRGB = {
+		internal static readonly int[] rawRGB = {
 			0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080, 0x008080, 0xc0c0c0,
 			0x808080, 0xff0000, 0x00ff00, 0xffff00, 0x0000ff, 0xff00ff, 0x00ffff, 0xffffff,
 			0x000000, 0x00005F, 0x000087, 0x0000af, 0x0000d7, 0x0000ff, 0x005f00, 0x005f5f,
@@ -38,11 +38,11 @@
 			0xa8a8a8, 0xb2b2b2, 0xbcbcbc, 0xc6c6c6, 0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee
 		};
 
-		public static RGB ToRGB(byte ansi8)
-		{
+        public RGB LookupRGB(byte ansi8)
+        {
 			return new RGB(rawRGB[ansi8]);
 		}
-    }
+	}
 }
 
 

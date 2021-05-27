@@ -1,7 +1,7 @@
 ﻿using BigEndian.IO;
 using System;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Glyph
 {
     public class GlyphASCIIWriter : IGlyphWriter
     {

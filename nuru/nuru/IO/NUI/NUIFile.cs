@@ -2,6 +2,7 @@
 using BigEndian.IO;
 using nuru.IO.NUI.Cell;
 using nuru.IO.NUI.Cell.Color;
+using nuru.IO.NUI.Cell.Glyph;
 
 namespace nuru.IO.NUI
 {

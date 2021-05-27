@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using nuru.IO.NUI.Cell.Glyph;
 using nuru.Unit.Tests;
 using System;
 

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using nuru.IO.NUI.Cell;
 using nuru.IO.NUI.Cell.Color;
+using nuru.IO.NUI.Cell.Glyph;
 using nuru.Unit.Tests;
 
 namespace nuru.IO.NUI.Unit.Tests

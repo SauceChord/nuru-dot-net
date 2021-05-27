@@ -1,11 +1,12 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Glyph
 {
-    public class GlyphVoidWriter : IGlyphWriter
+    public class GlyphUnicodeWriter : IGlyphWriter
     {
         public virtual void Write(BigEndianBinaryWriter writer, char glyph)
         {
+            writer.Write(glyph);
         }
     }
 }

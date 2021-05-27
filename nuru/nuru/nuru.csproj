@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\bigendian\BigEndian.IO\BigEndian.IO.csproj" />
-  </ItemGroup>
-
 </Project>

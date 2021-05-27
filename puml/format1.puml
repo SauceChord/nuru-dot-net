@@ -3,6 +3,8 @@ class nuru.IO.ImageFile
 class nuru.IO.PaletteFile
 class nuru.IO.FormatReader {
   -binReader
+  +ReadASCII() : char
+  +ReadUnicode() : char
   +ReadString() : string
   +ReadUInt8() : byte
   +ReadUInt16() : ushort
@@ -10,6 +12,8 @@ class nuru.IO.FormatReader {
 }
 class nuru.IO.FormatWriter {
   -binWriter
+  +WriteASCII(value : char)
+  +WriteUnicode(value : char)
   +Write(value : string)
   +Write(value : byte)
   +Write(value : ushort)

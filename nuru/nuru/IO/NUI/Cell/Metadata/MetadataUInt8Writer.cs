@@ -1,12 +1,12 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Metadata
 {
-    public class MetadataUInt16Writer : IMetadataWriter
+    public class MetadataUInt8Writer : IMetadataWriter
     {
         public virtual void Write(BigEndianBinaryWriter writer, ushort metadata)
         {
-            writer.WriteBigEndian(metadata);
+            writer.Write((byte)metadata);
         }
     }
 }

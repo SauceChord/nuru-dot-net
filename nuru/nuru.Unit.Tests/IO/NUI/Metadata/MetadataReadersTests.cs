@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using nuru.IO.NUI.Cell.Metadata;
 using nuru.Unit.Tests;
 
 namespace nuru.IO.NUI.Unit.Tests

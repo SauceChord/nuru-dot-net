@@ -1,6 +1,7 @@
 ﻿using BigEndian.IO;
 using nuru.IO.NUI.Cell.Color;
 using nuru.IO.NUI.Cell.Glyph;
+using nuru.IO.NUI.Cell.Metadata;
 
 namespace nuru.IO.NUI.Cell
 {

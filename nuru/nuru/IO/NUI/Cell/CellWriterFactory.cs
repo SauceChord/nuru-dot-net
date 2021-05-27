@@ -1,5 +1,6 @@
 ﻿using nuru.IO.NUI.Cell.Color;
 using nuru.IO.NUI.Cell.Glyph;
+using nuru.IO.NUI.Cell.Metadata;
 using System;
 using System.Collections.Generic;
 

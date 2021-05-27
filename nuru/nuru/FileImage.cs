@@ -1,9 +1,6 @@
 ﻿using nuru.IO.NUI;
 using nuru.IO.NUP;
 using nuru.Palette;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace nuru
 {

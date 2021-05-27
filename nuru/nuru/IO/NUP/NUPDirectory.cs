@@ -21,7 +21,13 @@ namespace nuru.IO.NUP
 
         public NUPFile GetNUPFile(string name)
         {
-            return nupFiles[name];
+            if (name == null)
+                return null;
+
+            if (nupFiles.ContainsKey(name))
+                return nupFiles[name];
+            else
+                return null;
         }
     }
 }

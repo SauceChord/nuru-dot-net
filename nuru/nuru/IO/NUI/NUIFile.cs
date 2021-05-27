@@ -16,6 +16,9 @@ namespace nuru.IO.NUI
             get { return Header.GetCellConfig(); }
         }
 
+        public string GlyphFileName { get { return Header.GlyphMode == GlyphMode.Palette ? Header.GlyphPaletteName : null; } }
+        public string ColorFileName { get { return Header.ColorMode == ColorMode.Palette ? Header.ColorPaletteName : null; } }
+
         static NUIFile()
         {
             CellReaderFactory = new CellReaderFactory();

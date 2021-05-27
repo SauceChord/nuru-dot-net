@@ -20,18 +20,24 @@ namespace nuru.Viewer
             InitializeComponent();
         }
 
+
+        static class Image
+        {
+            public static IImage Load(string path, string nupDir)
+            {
+                NUIFile nuiFile = NUIFile.FromFile(path);
+
+                NUPDirectory dir = new NUPDirectory(nupDir);
+                NUPFile nupGlyphFile = dir.GetNUPFile(nuiFile.GlyphFileName);
+                NUPFile nupColorFile = dir.GetNUPFile(nuiFile.ColorFileName);
+
+                return new FileImage(nuiFile, nupGlyphFile, nupColorFile);
+            }
+        }
+
         private void ImageForm_Load(object sender, EventArgs e)
         {
-            NUPDirectory dir = new NUPDirectory("nup");
-
-            NUIFile nuiFile = NUIFile.FromFile("nui/nuru_cat.nui");
-            NUPFile nupGlyphFile = dir.GetNUPFile("nurustd");
-            NUPFile nupColorFile = null;
-
-            
-
-            FileImage image = new FileImage(nuiFile, nupGlyphFile, nupColorFile);
-            Render(image);
+            Render(Image.Load("nui/nuru_cat.nui", "nup"));
         }
 
         private void Render(IImage image)

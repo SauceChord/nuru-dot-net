@@ -1,6 +1,7 @@
 ﻿using BigEndian.IO;
 using NUnit.Framework;
 using nuru.IO.NUI.Cell;
+using nuru.IO.NUI.Cell.Color;
 using nuru.Unit.Tests;
 
 namespace nuru.IO.NUI.Unit.Tests
@@ -30,7 +31,7 @@ namespace nuru.IO.NUI.Unit.Tests
             return default;
         }
 
-        NUIColor IColorReader.Read(BigEndianBinaryReader reader)
+        ColorData IColorReader.Read(BigEndianBinaryReader reader)
         {
             calls += "C";
             return default;

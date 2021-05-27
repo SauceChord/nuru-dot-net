@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nuru.IO.NUI.Cell.Color;
+using System;
 using System.Collections.Generic;
 
 namespace nuru.IO.NUI.Cell

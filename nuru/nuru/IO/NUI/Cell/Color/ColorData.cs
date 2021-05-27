@@ -1,11 +1,11 @@
-﻿namespace nuru.IO.NUI
+﻿namespace nuru.IO.NUI.Cell.Color
 {
-    public struct NUIColor
+    public struct ColorData
     {
         public byte Foreground;
         public byte Background;
 
-        public NUIColor(byte foreground, byte background) : this()
+        public ColorData(byte foreground, byte background) : this()
         {
             Foreground = foreground;
             Background = background;

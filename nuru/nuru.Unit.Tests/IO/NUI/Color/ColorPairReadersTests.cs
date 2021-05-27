@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using nuru.IO.NUI;
+using nuru.IO.NUI.Cell.Color;
 
 namespace nuru.Unit.Tests.IO.NUI
 {
@@ -20,7 +20,7 @@ namespace nuru.Unit.Tests.IO.NUI
         [Test]
         public void TestReadVoid()
         {
-            Assert.That(voidReader.Read(null), Is.EqualTo(default(NUIColor)));
+            Assert.That(voidReader.Read(null), Is.EqualTo(default(ColorData)));
         }
 
         [TestCase(0x00, ExpectedResult = "0, 0")]

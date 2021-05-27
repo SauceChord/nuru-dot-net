@@ -1,10 +1,10 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Color
 {
     public class ColorVoidReader : IColorReader
     {
-        public virtual NUIColor Read(BigEndianBinaryReader reader)
+        public virtual ColorData Read(BigEndianBinaryReader reader)
         {
             return default;
         }

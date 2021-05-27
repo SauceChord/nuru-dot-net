@@ -1,4 +1,5 @@
 ﻿using BigEndian.IO;
+using nuru.IO.NUI.Cell.Color;
 
 namespace nuru.IO.NUI.Cell
 {

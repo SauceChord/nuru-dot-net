@@ -30,7 +30,7 @@ namespace nuru.IO.NUI.Tests.Writers
         [TestCase(255, 0, ExpectedResult = "11110000")]
         public string TestWriteUInt4(int foreground, int background)
         {
-            uint4Writer.Write(writer, new NUIColor((byte)foreground, (byte)background));
+            uint4Writer.Write(writer, new ColorData((byte)foreground, (byte)background));
             RewindStream();
             return ReadByteAsBinaryString();
         }
@@ -43,7 +43,7 @@ namespace nuru.IO.NUI.Tests.Writers
         [TestCase(255, 0, ExpectedResult = "0000000011111111")]
         public string TestWriteUInt8(int foreground, int background)
         {
-            uint8Writer.Write(writer, new NUIColor((byte)foreground, (byte)background));
+            uint8Writer.Write(writer, new ColorData((byte)foreground, (byte)background));
             RewindStream();
             return ReadByteAsBinaryString() + ReadByteAsBinaryString();
         }

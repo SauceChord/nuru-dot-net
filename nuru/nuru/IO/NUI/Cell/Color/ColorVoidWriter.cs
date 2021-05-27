@@ -1,10 +1,10 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Color
 {
     public class ColorVoidWriter : IColorWriter
     {
-        public virtual void Write(BigEndianBinaryWriter writer, NUIColor pair)
+        public virtual void Write(BigEndianBinaryWriter writer, ColorData pair)
         {            
         }
     }

@@ -1,14 +1,14 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell.Color
 {
     public class ColorUInt8Reader : IColorReader
     {
-        public virtual NUIColor Read(BigEndianBinaryReader reader)
+        public virtual ColorData Read(BigEndianBinaryReader reader)
         {
             byte foreground = reader.ReadByte();
             byte background = reader.ReadByte();
-            return new NUIColor(foreground, background);
+            return new ColorData(foreground, background);
         }
     }
 }

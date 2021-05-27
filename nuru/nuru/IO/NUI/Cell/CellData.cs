@@ -1,12 +1,14 @@
-﻿namespace nuru.IO.NUI.Cell
+﻿using nuru.IO.NUI.Cell.Color;
+
+namespace nuru.IO.NUI.Cell
 {
     public struct CellData
     {
         public char Glyph;
-        public NUIColor Color;
+        public ColorData Color;
         public ushort Metadata;
 
-        public CellData(char glyph, NUIColor color, ushort metadata) : this()
+        public CellData(char glyph, ColorData color, ushort metadata) : this()
         {
             Glyph = glyph;
             Color = color;

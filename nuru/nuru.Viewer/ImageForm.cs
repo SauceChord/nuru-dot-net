@@ -22,9 +22,14 @@ namespace nuru.Viewer
 
         private void ImageForm_Load(object sender, EventArgs e)
         {
+            NUPDirectory dir = new NUPDirectory("nup");
+
             NUIFile nuiFile = NUIFile.FromFile("nui/nuru_cat.nui");
-            NUPFile nupGlyphFile = NUPFile.FromFile("nup/nurustd.nup");
+            NUPFile nupGlyphFile = dir.GetNUPFile("nurustd");
             NUPFile nupColorFile = null;
+
+            
+
             FileImage image = new FileImage(nuiFile, nupGlyphFile, nupColorFile);
             Render(image);
         }

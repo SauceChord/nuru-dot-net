@@ -4,7 +4,7 @@ A C# .NET implementation of [domsson's nuru file format](https://github.com/doms
 
 # Current state
 
-Loads ASCII and Unicode images with 4bpc or 8bpc. Palette not yet implemented.
+Loads ASCII and Unicode images. Supports ANSI4, ANSI8 and TrueColor palette lookups. Metadata too. However does not yet provide a clean way to access ANSI4 and ANSI8 raw values. If you want to use them, you could look them up using the NUIFile and NUPFile (in case the NUIFile has a color palette mode and the NUPFile is providing ANSI8 codes).
 
 # Submodules
 
@@ -12,7 +12,3 @@ This repository uses submodules, so after you clone, use the following commands 
 
     git submodule init
     git submodule update
-
-# Plans
-
-I realise the need to visualize the output so I am taking a detour to create a viewer which uses the library. This simple viewer will be coming together with this repository as an example use case.

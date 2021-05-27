@@ -1,0 +1,42 @@
+@startuml
+class nuru.IO.ImageFile
+class nuru.IO.PaletteFile
+class nuru.IO.FormatReader {
+  -binReader
+  +ReadString() : string
+  +ReadUInt8() : byte
+  +ReadUInt16() : ushort
+  +ReadUInt32() : uint
+}
+class nuru.IO.FormatWriter {
+  -binWriter
+  +Write(value : string)
+  +Write(value : byte)
+  +Write(value : ushort)
+  +Write(value : uint)
+}
+
+class System.IO.BinaryReader
+class System.IO.BinaryWriter
+
+nuru.IO.ImageFile -[dashed]-> nuru.IO.FormatReader
+nuru.IO.ImageFile -[dashed]-> nuru.IO.FormatWriter
+nuru.IO.PaletteFile -[dashed]-> nuru.IO.FormatReader
+nuru.IO.PaletteFile -[dashed]-> nuru.IO.FormatWriter
+nuru.IO.FormatReader -[dashed]-> System.IO.BinaryReader
+nuru.IO.FormatWriter -[dashed]-> System.IO.BinaryWriter
+
+note left of nuru.IO.FormatReader
+  FormatReader and 
+  FormatWriter expose 
+  a simple method set 
+  specific for nuru files.
+end note
+
+note right of nuru.IO.FormatWriter
+  Endianness and
+  fixed string
+  length are
+  handled here.
+end note
+@enduml

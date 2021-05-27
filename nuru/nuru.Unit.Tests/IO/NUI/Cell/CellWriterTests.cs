@@ -1,5 +1,6 @@
 ﻿using BigEndian.IO;
 using NUnit.Framework;
+using nuru.IO.NUI.Cell;
 using nuru.Unit.Tests;
 
 namespace nuru.IO.NUI.Unit.Tests
@@ -19,7 +20,7 @@ namespace nuru.IO.NUI.Unit.Tests
         [Test]
         public void ReadCellCallsInOrder()
         {
-            cellWriter.Write(null, new NUICell('A', new NUIColor(12, 2), 123));
+            cellWriter.Write(null, new CellData('A', new NUIColor(12, 2), 123));
             Assert.That(calls, Is.EqualTo("A12, 2123"));
         }
 

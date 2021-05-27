@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using nuru.IO.NUI.Cell;
+using System.Collections.Generic;
 using System.IO;
 
 namespace nuru.IO.NUI
@@ -60,9 +61,9 @@ namespace nuru.IO.NUI
             format.Write(ColorPaletteName);
         }
 
-        public NUICellConfig GetCellConfig()
+        public CellConfig GetCellConfig()
         {
-            return new NUICellConfig(GlyphMode, ColorMode, MetadataMode);
+            return new CellConfig(GlyphMode, ColorMode, MetadataMode);
         }
 
         public override bool Equals(object obj)

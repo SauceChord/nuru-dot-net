@@ -1,5 +1,6 @@
 ﻿using BigEndian.IO;
 using NUnit.Framework;
+using nuru.IO.NUI.Cell;
 using System;
 
 namespace nuru.IO.NUI.Unit.Tests
@@ -7,13 +8,13 @@ namespace nuru.IO.NUI.Unit.Tests
     public class CellReaderFactoryTests : IGlyphReader, IColorReader, IMetadataReader
     {
         protected CellReaderFactory factory;
-        protected NUICellConfig bigCellConfig;
+        protected CellConfig bigCellConfig;
 
         [SetUp]
         public void Setup()
         {
             factory = new CellReaderFactory();
-            bigCellConfig = new NUICellConfig(
+            bigCellConfig = new CellConfig(
                             GlyphMode.UTF16,
                             ColorMode.EightBit,
                             MetadataMode.SixteenBit);

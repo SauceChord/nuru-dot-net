@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using BigEndian.IO;
+using nuru.IO.NUI.Cell;
 
 namespace nuru.IO.NUI
 {
@@ -9,9 +10,9 @@ namespace nuru.IO.NUI
         public readonly static CellWriterFactory CellWriterFactory;
 
         public NUIFileHeader Header;
-        public NUICell[,] Payload;
+        public Cell.CellData[,] Payload;
 
-        public NUICellConfig CellConfig
+        public CellConfig CellConfig
         {
             get { return Header.GetCellConfig(); }
         }
@@ -54,7 +55,7 @@ namespace nuru.IO.NUI
             CellWriterFactory.RegisterMetadataWriter(MetadataMode.SixteenBit, new MetadataVoidWriter());
         }
 
-        public NUIFile(NUIFileHeader header, NUICell[,] cells)
+        public NUIFile(NUIFileHeader header, Cell.CellData[,] cells)
         {
             Header = header;
             Payload = cells;
@@ -66,7 +67,7 @@ namespace nuru.IO.NUI
             var binaryReader = new BigEndianBinaryReader(stream);                
             var cellReader = CellReaderFactory.Build(header.GetCellConfig());
 
-            NUICell[,] cells = new NUICell[header.Width, header.Height];
+            Cell.CellData[,] cells = new Cell.CellData[header.Width, header.Height];
             for (ushort row = 0; row < header.Height; ++row)
                 for (ushort col = 0; col < header.Width; ++col)
                     cells[col, row] = cellReader.Read(binaryReader);

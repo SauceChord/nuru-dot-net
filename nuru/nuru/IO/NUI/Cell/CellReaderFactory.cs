@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell
 {
     public class CellReaderFactory
     {
@@ -9,7 +9,7 @@ namespace nuru.IO.NUI
         readonly Dictionary<ColorMode, IColorReader> colorPairReaders = new Dictionary<ColorMode, IColorReader>();
         readonly Dictionary<MetadataMode, IMetadataReader> metadataReaders = new Dictionary<MetadataMode, IMetadataReader>();
 
-        public CellReader Build(NUICellConfig cellConfig)
+        public CellReader Build(CellConfig cellConfig)
         {
             if (!glyphReaders.ContainsKey(cellConfig.Glyph))
                 throw new CellFactoryException($"No registered glyph reader that handles '{cellConfig.Glyph}'.");

@@ -1,6 +1,6 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell
 {
     public class CellReader
     {
@@ -15,9 +15,9 @@ namespace nuru.IO.NUI
             this.metadata = metadata;
         }
 
-        public NUICell Read(BigEndianBinaryReader reader)
+        public CellData Read(BigEndianBinaryReader reader)
         {
-            return new NUICell(glyph.Read(reader), color.Read(reader), metadata.Read(reader));
+            return new CellData(glyph.Read(reader), color.Read(reader), metadata.Read(reader));
         }
     }
 }

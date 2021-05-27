@@ -1,6 +1,6 @@
 ﻿using BigEndian.IO;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell
 {
     public class CellWriter
     {
@@ -15,7 +15,7 @@ namespace nuru.IO.NUI
             this.metadata = meta;
         }
 
-        public void Write(BigEndianBinaryWriter writer, NUICell cell)
+        public void Write(BigEndianBinaryWriter writer, CellData cell)
         {
             glyph.Write(writer, cell.Glyph);
             color.Write(writer, cell.Color);

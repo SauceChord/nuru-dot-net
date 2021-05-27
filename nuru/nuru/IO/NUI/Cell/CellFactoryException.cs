@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell
 {
     public class CellFactoryException : InvalidOperationException
     {

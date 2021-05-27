@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace nuru.IO.NUI
+namespace nuru.IO.NUI.Cell
 {
     public class CellWriterFactory
     {
@@ -9,7 +9,7 @@ namespace nuru.IO.NUI
         readonly Dictionary<ColorMode, IColorWriter> colorWriters = new Dictionary<ColorMode, IColorWriter>();
         readonly Dictionary<MetadataMode, IMetadataWriter> metadataWriters = new Dictionary<MetadataMode, IMetadataWriter>();
 
-        public CellWriter Build(NUICellConfig cellConfig)
+        public CellWriter Build(CellConfig cellConfig)
         {
             if (!glyphWriters.ContainsKey(cellConfig.Glyph))
                 throw new CellFactoryException($"No registered glyph writer that handles '{cellConfig.Glyph}'.");

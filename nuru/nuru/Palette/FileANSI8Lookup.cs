@@ -14,8 +14,8 @@ namespace nuru.Palette
 
         public RGB LookupRGB(byte index)
         {
-            byte ansi = nupFile.ANSIPayload[index];
-            return new RGB(ConstANSI8Lookup.rawRGB[ansi]);
+            byte ansi8 = nupFile.ANSI8Payload[index];
+            return new RGB(ConstANSI8Lookup.rawRGB[ansi8]);
         }
     }
 }

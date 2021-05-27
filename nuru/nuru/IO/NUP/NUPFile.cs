@@ -7,14 +7,14 @@ namespace nuru.IO.NUP
     {
         public const int PayloadCount = 256;
         public NUPFileHeader Header;
-        public byte[] ANSIPayload;
+        public byte[] ANSI8Payload;
         public char[] UnicodePayload;
         public RGB[] RGBPayload;
 
-        public NUPFile(NUPFileHeader header, byte[] ansiPayload, char[] unicodePayload, RGB[] rgbPayload)
+        public NUPFile(NUPFileHeader header, byte[] ansi8Payload, char[] unicodePayload, RGB[] rgbPayload)
         {
             Header = header;
-            ANSIPayload = ansiPayload;
+            ANSI8Payload = ansi8Payload;
             UnicodePayload = unicodePayload;
             RGBPayload = rgbPayload;
         }
@@ -22,7 +22,7 @@ namespace nuru.IO.NUP
         public static NUPFile FromStream(Stream stream)
         {
             var header = NUPFileHeader.FromStream(stream);
-            byte[] ansiPayload = null;
+            byte[] ansi8Payload = null;
             char[] unicodePayload = null;
             RGB[] rgbPayload = null;
 
@@ -30,8 +30,8 @@ namespace nuru.IO.NUP
 
             switch (header.Type)
             {
-                case PaletteType.Ansi:
-                    ansiPayload = reader.ReadBytes(PayloadCount);
+                case PaletteType.ANSI8:
+                    ansi8Payload = reader.ReadBytes(PayloadCount);
                     break;
                 case PaletteType.Unicode:
                     unicodePayload = reader.ReadChars(PayloadCount);
@@ -50,7 +50,7 @@ namespace nuru.IO.NUP
                     throw new FormatException("Bad palette type");
             }
 
-            return new NUPFile(header, ansiPayload, unicodePayload, rgbPayload);
+            return new NUPFile(header, ansi8Payload, unicodePayload, rgbPayload);
         }
 
         public void ToStream(Stream stream)
@@ -61,8 +61,8 @@ namespace nuru.IO.NUP
 
             switch (Header.Type)
             {
-                case PaletteType.Ansi:
-                    writer.Write(ANSIPayload);
+                case PaletteType.ANSI8:
+                    writer.Write(ANSI8Payload);
                     break;
                 case PaletteType.Unicode:
                     writer.Write(UnicodePayload);

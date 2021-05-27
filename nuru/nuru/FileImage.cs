@@ -36,7 +36,7 @@ namespace nuru
                 case ColorMode.Palette:
                     switch (nupColorFile.Header.Type)
                     {
-                        case PaletteType.Ansi:
+                        case PaletteType.ANSI8:
                             rgbLookup = new FileANSI8Lookup(nupColorFile);
                             break;
                         case PaletteType.RGB:

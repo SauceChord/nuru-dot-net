@@ -20,7 +20,7 @@ namespace nuru.Unit.Tests.IO.NUI
         [Test]
         public void TestReadVoid()
         {
-            Assert.That(voidReader.Read(null), Is.EqualTo(default(Color)));
+            Assert.That(voidReader.Read(null), Is.EqualTo(default(NUIColor)));
         }
 
         [TestCase(0x00, ExpectedResult = "0, 0")]

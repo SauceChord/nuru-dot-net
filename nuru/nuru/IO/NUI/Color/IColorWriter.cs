@@ -4,6 +4,6 @@ namespace nuru.IO.NUI
 {
     public interface IColorWriter
     {
-        void Write(BigEndianBinaryWriter writer, Color pair);
+        void Write(BigEndianBinaryWriter writer, NUIColor pair);
     }
 }

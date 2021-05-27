@@ -29,7 +29,7 @@ namespace nuru.IO.NUI.Unit.Tests
             return default;
         }
 
-        Color IColorReader.Read(BigEndianBinaryReader reader)
+        NUIColor IColorReader.Read(BigEndianBinaryReader reader)
         {
             calls += "C";
             return default;

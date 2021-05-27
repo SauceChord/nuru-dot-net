@@ -7,13 +7,13 @@ namespace nuru.IO.NUI.Unit.Tests
     public class CellReaderFactoryTests : IGlyphReader, IColorReader, IMetadataReader
     {
         protected CellReaderFactory factory;
-        protected CellConfig bigCellConfig;
+        protected NUICellConfig bigCellConfig;
 
         [SetUp]
         public void Setup()
         {
             factory = new CellReaderFactory();
-            bigCellConfig = new CellConfig(
+            bigCellConfig = new NUICellConfig(
                             GlyphMode.UTF16,
                             ColorMode.EightBit,
                             MetadataMode.SixteenBit);
@@ -72,9 +72,9 @@ namespace nuru.IO.NUI.Unit.Tests
             return ' ';
         }
 
-        Color IColorReader.Read(BigEndianBinaryReader reader)
+        NUIColor IColorReader.Read(BigEndianBinaryReader reader)
         {
-            return new Color(1, 2);
+            return new NUIColor(1, 2);
         }
 
         ushort IMetadataReader.Read(BigEndianBinaryReader reader)

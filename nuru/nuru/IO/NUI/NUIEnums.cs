@@ -1,4 +1,4 @@
-﻿namespace nuru
+﻿namespace nuru.IO.NUI
 {
     public enum GlyphMode : byte
     {
@@ -21,13 +21,5 @@
         None = 0,
         EightBit = 1,
         SixteenBit = 2,
-    }
-
-    public enum PaletteType : byte
-    {
-        None = 0,
-        ANSI8 = 1,
-        Unicode = 2,
-        RGB = 3,
     }
 }

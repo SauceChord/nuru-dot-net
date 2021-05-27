@@ -4,6 +4,6 @@ namespace nuru.IO.NUI
 {
     public interface IColorReader
     {
-        Color Read(BigEndianBinaryReader reader);
+        NUIColor Read(BigEndianBinaryReader reader);
     }
 }

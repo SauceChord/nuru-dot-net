@@ -15,7 +15,7 @@ namespace nuru.IO.NUI
             this.metadata = meta;
         }
 
-        public void Write(BigEndianBinaryWriter writer, Cell cell)
+        public void Write(BigEndianBinaryWriter writer, NUICell cell)
         {
             glyph.Write(writer, cell.Glyph);
             color.Write(writer, cell.Color);

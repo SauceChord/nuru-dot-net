@@ -1,12 +1,12 @@
-﻿namespace nuru
+﻿namespace nuru.IO.NUI
 {
-    public struct CellConfig
+    public struct NUICellConfig
     {
         public GlyphMode Glyph;
         public ColorMode Color;
         public MetadataMode Metadata;
 
-        public CellConfig(GlyphMode glyph, ColorMode color, MetadataMode metadata) : this()
+        public NUICellConfig(GlyphMode glyph, ColorMode color, MetadataMode metadata) : this()
         {
             Glyph = glyph;
             Color = color;

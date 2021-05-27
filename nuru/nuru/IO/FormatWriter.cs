@@ -1,5 +1,6 @@
 ﻿using BigEndian.IO;
-using System;
+using nuru.IO.NUI;
+using nuru.IO.NUP;
 using System.IO;
 using System.Text;
 

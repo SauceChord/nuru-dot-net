@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using nuru.IO.NUI;
 
 namespace nuru.Unit.Tests
 {
@@ -9,7 +10,7 @@ namespace nuru.Unit.Tests
         [TestCase(125, 200, ExpectedResult = "125, 200")]
         public string TestToString(byte fg, byte bg)
         {
-            return new Color(fg, bg).ToString();
+            return new NUIColor(fg, bg).ToString();
         }
     }
 }

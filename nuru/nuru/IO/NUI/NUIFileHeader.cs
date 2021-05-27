@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace nuru.IO
+namespace nuru.IO.NUI
 {
     public class NUIFileHeader
     {
@@ -60,9 +60,9 @@ namespace nuru.IO
             format.Write(ColorPaletteName);
         }
 
-        public CellConfig GetCellConfig()
+        public NUICellConfig GetCellConfig()
         {
-            return new CellConfig(GlyphMode, ColorMode, MetadataMode);
+            return new NUICellConfig(GlyphMode, ColorMode, MetadataMode);
         }
 
         public override bool Equals(object obj)

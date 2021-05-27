@@ -15,9 +15,9 @@ namespace nuru.IO.NUI
             this.metadata = metadata;
         }
 
-        public Cell Read(BigEndianBinaryReader reader)
+        public NUICell Read(BigEndianBinaryReader reader)
         {
-            return new Cell(glyph.Read(reader), color.Read(reader), metadata.Read(reader));
+            return new NUICell(glyph.Read(reader), color.Read(reader), metadata.Read(reader));
         }
     }
 }

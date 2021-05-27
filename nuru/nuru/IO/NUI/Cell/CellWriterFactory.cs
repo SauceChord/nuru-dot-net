@@ -9,7 +9,7 @@ namespace nuru.IO.NUI
         readonly Dictionary<ColorMode, IColorWriter> colorWriters = new Dictionary<ColorMode, IColorWriter>();
         readonly Dictionary<MetadataMode, IMetadataWriter> metadataWriters = new Dictionary<MetadataMode, IMetadataWriter>();
 
-        public CellWriter Build(CellConfig cellConfig)
+        public CellWriter Build(NUICellConfig cellConfig)
         {
             if (!glyphWriters.ContainsKey(cellConfig.Glyph))
                 throw new CellFactoryException($"No registered glyph writer that handles '{cellConfig.Glyph}'.");

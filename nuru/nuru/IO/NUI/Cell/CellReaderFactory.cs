@@ -9,7 +9,7 @@ namespace nuru.IO.NUI
         readonly Dictionary<ColorMode, IColorReader> colorPairReaders = new Dictionary<ColorMode, IColorReader>();
         readonly Dictionary<MetadataMode, IMetadataReader> metadataReaders = new Dictionary<MetadataMode, IMetadataReader>();
 
-        public CellReader Build(CellConfig cellConfig)
+        public CellReader Build(NUICellConfig cellConfig)
         {
             if (!glyphReaders.ContainsKey(cellConfig.Glyph))
                 throw new CellFactoryException($"No registered glyph reader that handles '{cellConfig.Glyph}'.");

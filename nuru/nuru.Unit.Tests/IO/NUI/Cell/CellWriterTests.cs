@@ -19,7 +19,7 @@ namespace nuru.IO.NUI.Unit.Tests
         [Test]
         public void ReadCellCallsInOrder()
         {
-            cellWriter.Write(null, new Cell('A', new Color(12, 2), 123));
+            cellWriter.Write(null, new NUICell('A', new NUIColor(12, 2), 123));
             Assert.That(calls, Is.EqualTo("A12, 2123"));
         }
 
@@ -28,7 +28,7 @@ namespace nuru.IO.NUI.Unit.Tests
             calls += glyph;
         }
 
-        void IColorWriter.Write(BigEndianBinaryWriter writer, Color pair)
+        void IColorWriter.Write(BigEndianBinaryWriter writer, NUIColor pair)
         {
             calls += pair;
         }

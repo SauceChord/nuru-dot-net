@@ -1,0 +1,43 @@
+@startuml
+enum nuru.IO.PaletteType {
+  ANSI8 = 1
+  Unicode = 2
+  RGB = 3
+}
+class nuru.IO.RGB {
+  +Red : byte
+  +Green : byte
+  +Blue : byte
+
+  +ToString()
+}
+class nuru.IO.PaletteFile {
+  +const Signature = "NURUPAL"
+  +const Version = 1
+  +PaletteType
+  +KeyChar
+  +KeyFore
+  +KeyBack
+  +Userdata
+  -entries : byte[]
+
+  +GetANSI8(index)
+  +GetChar(index)
+  +GetRGB(index)
+
+  +SetANSI8(index, value)
+  +SetChar(index, value)
+  +SetRGB(index, value)
+
+  +ToStream(formatWriter)
+  +ToStream(stream)
+  +ToFile(path)
+
+  +static FromStream(formatReader)
+  +static FromStream(stream)
+  +static FromFile(path)
+}
+
+nuru.IO.PaletteType --* "1" nuru.IO.PaletteFile
+nuru.IO.RGB <-[dashed]- nuru.IO.PaletteFile
+@enduml

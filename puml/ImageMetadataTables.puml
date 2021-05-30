@@ -1,0 +1,42 @@
+@startuml ImageMetadataTables
+interface ImageItemCollection<ushort> {
+    +{abstract} Width
+    +{abstract} Height
+    +{abstract} Get(x, y)
+    +{abstract} Set(x, y, obj)
+    +{abstract} Load(x, y, formatReader)
+    +{abstract} Save(x, y, formatWriter)
+}
+
+class Metadata8Collection {
+    -arr : ushort [,]
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+class Metadata16Collection {
+    -arr : ushort [,]
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+class MetadataConstCollection {
+    -constant : ushort
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+
+ImageItemCollection <|-- Metadata8Collection
+ImageItemCollection <|-- Metadata16Collection
+ImageItemCollection <|-- MetadataConstCollection
+@enduml

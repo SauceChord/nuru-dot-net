@@ -1,0 +1,30 @@
+@startuml BinaryExtensions
+class ImageFile
+class PaletteFile
+class BinaryReaderExtensions {
+  +ReadNURUASCII(this BinaryReader) : char
+  +ReadNURUUnicode(this BinaryReader) : char
+  +ReadNURUString(this BinaryReader) : string
+  +ReadNURUUInt8(this BinaryReader) : byte
+  +ReadNURUUInt16(this BinaryReader) : ushort
+  +ReadNURUUInt32(this BinaryReader) : uint
+}
+class BinaryWriterExtensions {
+  +WriteNURUASCII(this BinaryWriter, char)
+  +WriteNURUUnicode(this BinaryWriter, char)
+  +WriteNURU(this BinaryWriter, string)
+  +WriteNURU(this BinaryWriter, byte)
+  +WriteNURU(this BinaryWriter, ushort)
+  +WriteNURU(this BinaryWriter, uint)
+}
+
+class System.IO.BinaryReader
+class System.IO.BinaryWriter
+
+ImageFile -[dashed]-> BinaryReaderExtensions
+ImageFile -[dashed]-> BinaryWriterExtensions
+PaletteFile -[dashed]-> BinaryReaderExtensions
+PaletteFile -[dashed]-> BinaryWriterExtensions
+BinaryReaderExtensions -[dashed]-> System.IO.BinaryReader
+BinaryWriterExtensions -[dashed]-> System.IO.BinaryWriter
+@enduml

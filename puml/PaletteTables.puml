@@ -1,0 +1,40 @@
+@startuml PaletteTables
+abstract class PaletteTable {
+  #const Count = 256
+  ----
+  +{static} CreateTable(paletteType)
+  ....
+  +Get(index)
+  +Set(index, obj)
+  +{abstract} Load(formatReader)
+  +{abstract} Save(formatWriter)
+}
+
+class ANSI8Table {
+  -entries : byte[]
+  +Get(index)
+  +Set(index, obj)
+  +Load(formatReader)
+  +Save(formatWriter)
+}
+
+class UnicodeTable {
+  -entries : char[]
+  +Get(index)
+  +Set(index, obj)
+  +Load(formatReader)
+  +Save(formatWriter)
+}
+
+class RGBTable {
+  -entries : RGB[]
+  +Get(index)
+  +Set(index, obj)
+  +Load(formatReader)
+  +Save(formatWriter)
+}
+
+PaletteTable <|-- ANSI8Table
+PaletteTable <|-- UnicodeTable 
+PaletteTable <|-- RGBTable 
+@enduml

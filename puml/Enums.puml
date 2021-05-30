@@ -1,0 +1,24 @@
+@startuml Enums
+enum PaletteType {
+  ANSI8 = 1
+  Unicode = 2
+  RGB = 3
+}
+enum GlyphMode {
+  None = 0
+  ASCII = 1
+  Unicode = 2
+  PaletteFile = 129
+}
+enum ColorMode {
+  None = 0
+  ANSI4 = 1
+  ANSI8 = 2
+  PaletteFile = 130
+}
+enum MetaMode {
+  None = 0
+  UInt8 = 1
+  UInt16 = 2
+}
+@enduml

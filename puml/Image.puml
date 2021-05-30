@@ -1,0 +1,21 @@
+@startuml ImageDiagram
+class Image {
+  +Image(imageFile, paletteFileProvider)
+  +GetChar(x, y)
+  +GetANSI(x, y)
+  +GetRGB(x, y)
+  +GetMetadata(x, y)
+}
+
+class ImageFile
+class PaletteFile
+
+interface IPaletteFileProvider {
+  +GetGlyphFile(name) : PaletteFile
+  +GetColorFile(name) : PaletteFile
+}
+
+IPaletteFileProvider -[dashed]-> PaletteFile
+Image -[dashed]-> ImageFile
+Image -[dashed]-> IPaletteFileProvider
+@enduml

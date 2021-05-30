@@ -1,0 +1,33 @@
+@startuml PaletteFile
+class PaletteFile {
+  ..Constants..
+  -Signature = "NURUPAL"
+  -Version = 1
+  ..Variables..
+  +PaletteType 
+  +KeyChar = ' '
+  +KeyFore = 15
+  +KeyBack = 0
+  +Userdata = 0
+  -table : PaletteTable
+  ----
+  +Get(index)
+  +Set(index, obj)
+  +Save(formatWriter)
+  +{static} Load(formatReader)
+}
+
+abstract class PaletteTable {
+  #const Count = 256
+  ----
+  +{static} CreateTable(paletteType)
+  ....
+  +Get(index)
+  +Set(index, obj)
+  +{abstract} Load(formatReader)
+  +{abstract} Save(formatWriter)
+}
+
+PaletteFile "1" *-- PaletteTable  
+
+@enduml

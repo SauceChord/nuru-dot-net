@@ -1,0 +1,42 @@
+@startuml ImageCharTables
+interface ImageItemCollection<char> {
+    +{abstract} Width
+    +{abstract} Height
+    +{abstract} Get(x, y)
+    +{abstract} Set(x, y, obj)
+    +{abstract} Load(x, y, formatReader)
+    +{abstract} Save(x, y, formatWriter)
+}
+
+class ASCIICollection {
+    -arr : char[,]
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+class UnicodeCollection {
+    -arr : char[,]
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+class UnicodeConstCollection {
+    -constant : char
+    +Width
+    +Height
+    +Get(x, y)
+    +Set(x, y, obj)
+    +Load(x, y, formatReader)
+    +Save(x, y, formatWriter)
+}
+
+ImageItemCollection <|-- ASCIICollection
+ImageItemCollection <|-- UnicodeCollection
+ImageItemCollection <|-- UnicodeConstCollection
+@enduml

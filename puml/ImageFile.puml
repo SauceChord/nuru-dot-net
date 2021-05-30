@@ -1,0 +1,45 @@
+@startuml ImageFile
+class ImageFile {
+  ..Constants..
+  -Signature = "NURUIMG"
+  - Version = 1
+  ..Variables..
+  +GlyphMode = Unicode
+  +ColorMode = ANSI8
+  +MetaMode = None
+  +Width = 0
+  +Height = 0
+  +KeyChar = ' '
+  +KeyForeColor = 15
+  +KeyBackColor = 0
+  +GlyphPalette = ""
+  +ColorPalette = ""
+  -charTable
+  -colorTable
+  -metadataTable
+  ----
+  ..Getters..
+  +GetChar(x, y)
+  +GetColor(x, y)
+  +GetMetadata(x, y)
+  ..Setters..
+  +SetChar(x, y, value)
+  +SetColor(x, y, value)
+  +SetMetadata(x, y, obj)
+  ..Image modification..
+  +Resize(width, height)
+  ..File IO..
+  +Save(formatWriter)
+  +{static} Load(formatReader)
+}
+
+interface ImageItemCollection<T> {
+    +{abstract} Length
+    +{abstract} Get(x, y)
+    +{abstract} Set(x, y, obj)
+    +{abstract} Load(x, y, formatReader)
+    +{abstract} Save(x, y, formatWriter)
+}
+
+ImageFile "3" *-- "1" ImageItemCollection 
+@enduml
